@@ -18,7 +18,8 @@ public class TestDrive {
         
         Order o = new Order();
         o.setVisible(true);
-        
+        o.setTitle("음식 주문");
+        o.setLocation(200, 200);
     }
     
 }
