@@ -5,18 +5,30 @@
  */
 package DPP_Order;
 
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import java.io.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  *
  * @author MongGu
  */
 public class Order extends javax.swing.JFrame {
-
+    
+    int RowCount;
+    String UserName;
+    
     /**
      * Creates new form Order
      */
     public Order() {
         initComponents();
-        UserNameField.setText("고길동" + " 님");   // 고객 객체 정보 받아와서 고객이름 지정
+        RowCount = 0;
+        UserName = "고길동";
+        
+        UserNameField.setText(UserName + " 님");   // 고객 객체 정보 받아와서 고객이름 지정
     }
 
     /**
@@ -31,7 +43,7 @@ public class Order extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        MenuTable = new javax.swing.JTable();
         NoCategories = new javax.swing.JPanel();
         DRINKPanel = new javax.swing.JPanel();
         DRINK_item_1 = new javax.swing.JLabel();
@@ -82,8 +94,8 @@ public class Order extends javax.swing.JFrame {
         jLabel12.setText("담은 메뉴");
         jPanel2.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, -1, -1));
 
-        jTable1.setFont(new java.awt.Font("맑은 고딕", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        MenuTable.setFont(new java.awt.Font("맑은 고딕", 0, 14)); // NOI18N
+        MenuTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -104,19 +116,27 @@ public class Order extends javax.swing.JFrame {
                 "메뉴", "가격"
             }
         ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.Integer.class
+            };
             boolean[] canEdit = new boolean [] {
                 false, false
             };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
             }
         });
-        jTable1.setRowHeight(20);
-        jScrollPane2.setViewportView(jTable1);
-        if (jTable1.getColumnModel().getColumnCount() > 0) {
-            jTable1.getColumnModel().getColumn(0).setResizable(false);
-            jTable1.getColumnModel().getColumn(1).setResizable(false);
+        MenuTable.setRowHeight(20);
+        MenuTable.setShowVerticalLines(false);
+        jScrollPane2.setViewportView(MenuTable);
+        if (MenuTable.getColumnModel().getColumnCount() > 0) {
+            MenuTable.getColumnModel().getColumn(0).setResizable(false);
+            MenuTable.getColumnModel().getColumn(1).setResizable(false);
         }
 
         jPanel2.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, 140, 310));
@@ -141,28 +161,58 @@ public class Order extends javax.swing.JFrame {
         DRINKPanel.setBackground(new java.awt.Color(32, 47, 90));
         DRINKPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        DRINK_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test.png")); // NOI18N
+        DRINK_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\coke.png")); // NOI18N
         DRINK_item_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_1MouseClicked(evt);
+            }
+        });
         DRINKPanel.add(DRINK_item_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        DRINK_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test.png")); // NOI18N
+        DRINK_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\cider.png")); // NOI18N
         DRINK_item_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_2MouseClicked(evt);
+            }
+        });
         DRINKPanel.add(DRINK_item_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        DRINK_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test.png")); // NOI18N
+        DRINK_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\fanta.png")); // NOI18N
         DRINK_item_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_3MouseClicked(evt);
+            }
+        });
         DRINKPanel.add(DRINK_item_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
-        DRINK_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test.png")); // NOI18N
+        DRINK_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\americano.png")); // NOI18N
         DRINK_item_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_4MouseClicked(evt);
+            }
+        });
         DRINKPanel.add(DRINK_item_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
-        DRINK_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test.png")); // NOI18N
+        DRINK_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\icetea.png")); // NOI18N
         DRINK_item_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_5MouseClicked(evt);
+            }
+        });
         DRINKPanel.add(DRINK_item_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
 
-        DRINK_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test.png")); // NOI18N
+        DRINK_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\smoothie.png")); // NOI18N
         DRINK_item_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_6MouseClicked(evt);
+            }
+        });
         DRINKPanel.add(DRINK_item_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, -1, -1));
 
         getContentPane().add(DRINKPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 690, 270));
@@ -172,28 +222,58 @@ public class Order extends javax.swing.JFrame {
         FOODPanel.setPreferredSize(new java.awt.Dimension(650, 240));
         FOODPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        FOOD_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test2.png")); // NOI18N
+        FOOD_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\ramen.png")); // NOI18N
         FOOD_item_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_1MouseClicked(evt);
+            }
+        });
         FOODPanel.add(FOOD_item_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        FOOD_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test2.png")); // NOI18N
+        FOOD_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\friedRice.png")); // NOI18N
         FOOD_item_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_2MouseClicked(evt);
+            }
+        });
         FOODPanel.add(FOOD_item_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        FOOD_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test2.png")); // NOI18N
+        FOOD_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\dduckbboki.png")); // NOI18N
         FOOD_item_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_3MouseClicked(evt);
+            }
+        });
         FOODPanel.add(FOOD_item_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
-        FOOD_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test2.png")); // NOI18N
+        FOOD_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\addEgg.png")); // NOI18N
         FOOD_item_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_4MouseClicked(evt);
+            }
+        });
         FOODPanel.add(FOOD_item_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
-        FOOD_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test2.png")); // NOI18N
+        FOOD_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\addCheeze.png")); // NOI18N
         FOOD_item_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_5MouseClicked(evt);
+            }
+        });
         FOODPanel.add(FOOD_item_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
 
-        FOOD_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test2.png")); // NOI18N
+        FOOD_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\addRice.png")); // NOI18N
         FOOD_item_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_6MouseClicked(evt);
+            }
+        });
         FOODPanel.add(FOOD_item_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, -1, -1));
 
         getContentPane().add(FOODPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 690, 270));
@@ -202,28 +282,58 @@ public class Order extends javax.swing.JFrame {
         SNACKPanel.setBackground(new java.awt.Color(32, 47, 90));
         SNACKPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        SNACK_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test3.png")); // NOI18N
+        SNACK_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\hotdog.png")); // NOI18N
         SNACK_item_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_1MouseClicked(evt);
+            }
+        });
         SNACKPanel.add(SNACK_item_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        SNACK_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test3.png")); // NOI18N
+        SNACK_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\tacoyaki.png")); // NOI18N
         SNACK_item_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_2MouseClicked(evt);
+            }
+        });
         SNACKPanel.add(SNACK_item_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        SNACK_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test3.png")); // NOI18N
+        SNACK_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\cheezeStick.png")); // NOI18N
         SNACK_item_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_3MouseClicked(evt);
+            }
+        });
         SNACKPanel.add(SNACK_item_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
 
-        SNACK_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test3.png")); // NOI18N
+        SNACK_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\potatoFried.png")); // NOI18N
         SNACK_item_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_4MouseClicked(evt);
+            }
+        });
         SNACKPanel.add(SNACK_item_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
 
-        SNACK_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test3.png")); // NOI18N
+        SNACK_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\ggang.png")); // NOI18N
         SNACK_item_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_5MouseClicked(evt);
+            }
+        });
         SNACKPanel.add(SNACK_item_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
 
-        SNACK_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\test3.png")); // NOI18N
+        SNACK_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\gorebab.png")); // NOI18N
         SNACK_item_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_6MouseClicked(evt);
+            }
+        });
         SNACKPanel.add(SNACK_item_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, -1, -1));
 
         getContentPane().add(SNACKPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 690, 270));
@@ -244,6 +354,7 @@ public class Order extends javax.swing.JFrame {
         jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 0, -1, 50));
 
         UserNameField.setEditable(false);
+        UserNameField.setBackground(new java.awt.Color(255, 255, 255));
         UserNameField.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
         UserNameField.setBorder(null);
         UserNameField.setFocusable(false);
@@ -266,6 +377,11 @@ public class Order extends javax.swing.JFrame {
 
         BuyButton.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\order.png")); // NOI18N
         BuyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BuyButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                BuyButtonMouseClicked(evt);
+            }
+        });
         jPanel5.add(BuyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, -1));
 
         RefrashButton.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\reload.png")); // NOI18N
@@ -411,9 +527,297 @@ public class Order extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel11MouseClicked
 
     private void RefrashButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RefrashButtonMouseClicked
-        // TODO add your handling code here:
+        
+        // 초기화 버튼 클릭
+        
+        for(int i=0; i<14; i++) {
+            MenuTable.setValueAt("", i, 0);
+            MenuTable.setValueAt("", i, 1);
+        }
+        
+        RowCount = 0;
         
     }//GEN-LAST:event_RefrashButtonMouseClicked
+
+    private void DRINK_item_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_1MouseClicked
+        
+        // 콜라 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("콜라", RowCount, 0);
+            MenuTable.setValueAt(1500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+        
+        //String CourseName = (String) MenuTable.getValueAt(selectedRow, 1);
+    }//GEN-LAST:event_DRINK_item_1MouseClicked
+
+    private void BuyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BuyButtonMouseClicked
+        
+        // 구매 버튼 클릭
+        
+        if(RowCount == 0) { // 메뉴를 아무것도 고르지 않았을 경우
+            JOptionPane.showInternalMessageDialog(null, "메뉴를 골라주세요.");
+            
+        } else {        // 정상적으로 주문이 되었을 경우
+                        
+            String filePath = "c:\\Temp\\test.txt";           // 저장할 임시 파일 경로
+            int cost = 0;       // 총 주문 금액
+            String orderText = "";      // 주문 내역
+            
+            for(int i=0; i<RowCount; i++) {
+                orderText += (String) MenuTable.getValueAt(i,0) + ", ";
+            }
+            
+            
+            for(int i=0; i<RowCount; i++) {
+                // cost[i] = (int) MenuTable.getValueAt(i,1);
+                cost += (int) MenuTable.getValueAt(i,1);
+            }
+            
+                        
+            try {
+                FileWriter fileWriter = new FileWriter(filePath, true);
+                fileWriter.write(UserName + "님의 주문 : " + orderText + "총 주문 금액 = " + cost + "\n\n");
+                fileWriter.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            
+            for(int i=0; i<14; i++) {
+                MenuTable.setValueAt("", i, 0);
+                MenuTable.setValueAt("", i, 1);
+            }
+            RowCount = 0;
+            
+            JOptionPane.showInternalMessageDialog(null, "주문이 접수되었습니다.");
+        }
+        
+    }//GEN-LAST:event_BuyButtonMouseClicked
+
+    private void DRINK_item_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_2MouseClicked
+        // 사이다 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("사이다", RowCount, 0);
+            MenuTable.setValueAt(1400, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_2MouseClicked
+
+    private void DRINK_item_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_3MouseClicked
+        // 환타 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("환타", RowCount, 0);
+            MenuTable.setValueAt(1200, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_3MouseClicked
+
+    private void DRINK_item_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_4MouseClicked
+        // 아메리카노 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("아메리카노", RowCount, 0);
+            MenuTable.setValueAt(2100, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_4MouseClicked
+
+    private void DRINK_item_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_5MouseClicked
+        // 아이스티 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("아이스티", RowCount, 0);
+            MenuTable.setValueAt(1900, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_5MouseClicked
+
+    private void DRINK_item_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_6MouseClicked
+        // 스무디 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("스무디", RowCount, 0);
+            MenuTable.setValueAt(2500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_6MouseClicked
+
+    private void FOOD_item_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_1MouseClicked
+        // 라면 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("라면", RowCount, 0);
+            MenuTable.setValueAt(3000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_1MouseClicked
+
+    private void FOOD_item_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_2MouseClicked
+        // 볶음밥 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("볶음밥", RowCount, 0);
+            MenuTable.setValueAt(3500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_2MouseClicked
+
+    private void FOOD_item_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_3MouseClicked
+        // 떡볶이 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("떡볶이", RowCount, 0);
+            MenuTable.setValueAt(4000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_3MouseClicked
+
+    private void FOOD_item_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_4MouseClicked
+        // 계란추가 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("계란추가", RowCount, 0);
+            MenuTable.setValueAt(500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_4MouseClicked
+
+    private void FOOD_item_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_5MouseClicked
+        // 치즈추가 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("치즈추가", RowCount, 0);
+            MenuTable.setValueAt(500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_5MouseClicked
+
+    private void FOOD_item_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_6MouseClicked
+        // 밥추가 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("밥추가", RowCount, 0);
+            MenuTable.setValueAt(1000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_6MouseClicked
+
+    private void SNACK_item_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_1MouseClicked
+        // 핫도그 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("핫도그", RowCount, 0);
+            MenuTable.setValueAt(2300, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_1MouseClicked
+
+    private void SNACK_item_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_2MouseClicked
+        // 타코야키 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("타코야키", RowCount, 0);
+            MenuTable.setValueAt(3000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_2MouseClicked
+
+    private void SNACK_item_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_3MouseClicked
+        // 치즈스틱 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("치즈스틱", RowCount, 0);
+            MenuTable.setValueAt(2200, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_3MouseClicked
+
+    private void SNACK_item_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_4MouseClicked
+        // 감자튀김 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("감자튀김", RowCount, 0);
+            MenuTable.setValueAt(2500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_4MouseClicked
+
+    private void SNACK_item_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_5MouseClicked
+        // 새우깡 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("새우깡", RowCount, 0);
+            MenuTable.setValueAt(1500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_5MouseClicked
+
+    private void SNACK_item_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_6MouseClicked
+        // 고래밥 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("고래밥", RowCount, 0);
+            MenuTable.setValueAt(1000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -467,6 +871,7 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JLabel FOOD_item_4;
     private javax.swing.JLabel FOOD_item_5;
     private javax.swing.JLabel FOOD_item_6;
+    private javax.swing.JTable MenuTable;
     private javax.swing.JPanel NoCategories;
     private javax.swing.JLabel RefrashButton;
     private javax.swing.JPanel SNACKPanel;
@@ -493,6 +898,5 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }
