@@ -1,5 +1,6 @@
 package DPP_Login;
 
+import DPP_Seat.Seat_Single;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -226,7 +227,7 @@ public class Login extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+        Seat_Single seat = Seat_Single.getInstance();
         String id=IdText.getText();
         String pw=PwText.getText();
         String name="";
@@ -242,7 +243,7 @@ public class Login extends javax.swing.JFrame {
             }            
         }
         if(login){
-            JOptionPane.showMessageDialog(null,"로그인 성공 \n"+name+"님 안녕하세요");
+            JOptionPane.showMessageDialog(null,"로그인 성공 \n"+name+"님 안녕하세요"+seat.getNum()+"번 자리입니다.");
         }else{
             JOptionPane.showMessageDialog(null,"로그인 실패.");
         }
