@@ -20,7 +20,6 @@ public class Order extends javax.swing.JFrame {
     int RowCount;
     String UserName;
     
-    
     /**
      * Creates new form Order
      */
@@ -705,7 +704,7 @@ public class Order extends javax.swing.JFrame {
 
     private void FOOD_item_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_4MouseClicked
         // 계란추가 클릭
-       
+        
         if (RowCount < 14) {
             MenuTable.setValueAt("계란추가", RowCount, 0);
             MenuTable.setValueAt(500, RowCount, 1);
