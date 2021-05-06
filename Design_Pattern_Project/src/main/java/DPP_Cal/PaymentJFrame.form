@@ -247,14 +247,6 @@
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JButton" name="btn_50000">
-<<<<<<< HEAD
-                  <Properties>
-                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/DPP_image/10000won.png"/>
-                    </Property>
-                  </Properties>
-=======
->>>>>>> fb88319135500f3ac1c7114cfbbc5ffa7470d5ce
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btn_50000MouseClicked"/>
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_50000ActionPerformed"/>

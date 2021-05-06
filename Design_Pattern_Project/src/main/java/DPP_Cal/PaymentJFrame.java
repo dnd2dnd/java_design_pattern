@@ -88,10 +88,6 @@ public class PaymentJFrame extends javax.swing.JFrame {
 
         payment_cash.setText("지불금액:");
 
-<<<<<<< HEAD
-        btn_50000.setIcon(new javax.swing.ImageIcon(getClass().getResource("/DPP_image/10000won.png"))); // NOI18N
-=======
->>>>>>> fb88319135500f3ac1c7114cfbbc5ffa7470d5ce
         btn_50000.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btn_50000MouseClicked(evt);
