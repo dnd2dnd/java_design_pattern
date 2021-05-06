@@ -7,7 +7,6 @@ package DPP_Order;
 
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.ImageIcon;
 import java.io.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -21,22 +20,12 @@ public class Order extends javax.swing.JFrame {
     int RowCount;
     String UserName;
     
+    
     /**
      * Creates new form Order
      */
     public Order() {
         initComponents();
-        
-        DRINKPanel.setVisible(false);
-        FOODPanel.setVisible(false);
-        SNACKPanel.setVisible(false);
-        NoCategories.setVisible(true);
-        
-        DRINKPanel.setEnabled(false);
-        FOODPanel.setEnabled(false);
-        SNACKPanel.setEnabled(false);
-        NoCategories.setEnabled(true);
-        
         RowCount = 0;
         UserName = "고길동";
         
@@ -58,24 +47,36 @@ public class Order extends javax.swing.JFrame {
         MenuTable = new javax.swing.JTable();
         NoCategories = new javax.swing.JPanel();
         DRINKPanel = new javax.swing.JPanel();
-        coke = new javax.swing.JButton();
-        cyder = new javax.swing.JButton();
-        fanta = new javax.swing.JButton();
+        DRINK_item_1 = new javax.swing.JLabel();
+        DRINK_item_2 = new javax.swing.JLabel();
+        DRINK_item_3 = new javax.swing.JLabel();
+        DRINK_item_4 = new javax.swing.JLabel();
+        DRINK_item_5 = new javax.swing.JLabel();
+        DRINK_item_6 = new javax.swing.JLabel();
         FOODPanel = new javax.swing.JPanel();
-        dduckbboki = new javax.swing.JButton();
-        friedRice = new javax.swing.JButton();
-        ramen = new javax.swing.JButton();
+        FOOD_item_1 = new javax.swing.JLabel();
+        FOOD_item_2 = new javax.swing.JLabel();
+        FOOD_item_3 = new javax.swing.JLabel();
+        FOOD_item_4 = new javax.swing.JLabel();
+        FOOD_item_5 = new javax.swing.JLabel();
+        FOOD_item_6 = new javax.swing.JLabel();
         SNACKPanel = new javax.swing.JPanel();
-        friedPotato = new javax.swing.JButton();
-        hotDog = new javax.swing.JButton();
-        cheezeStick = new javax.swing.JButton();
+        SNACK_item_1 = new javax.swing.JLabel();
+        SNACK_item_2 = new javax.swing.JLabel();
+        SNACK_item_3 = new javax.swing.JLabel();
+        SNACK_item_4 = new javax.swing.JLabel();
+        SNACK_item_5 = new javax.swing.JLabel();
+        SNACK_item_6 = new javax.swing.JLabel();
         jPanel4 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         UserNameField = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        refresh = new javax.swing.JButton();
-        order = new javax.swing.JButton();
+        BuyButton = new javax.swing.JLabel();
+        RefrashButton = new javax.swing.JLabel();
         jPanel7 = new javax.swing.JPanel();
         jPanel6 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
@@ -161,35 +162,59 @@ public class Order extends javax.swing.JFrame {
         DRINKPanel.setBackground(new java.awt.Color(32, 47, 90));
         DRINKPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        coke.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        coke.setText("콜라");
-        coke.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        coke.addMouseListener(new java.awt.event.MouseAdapter() {
+        DRINK_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\coke.png")); // NOI18N
+        DRINK_item_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cokeMouseClicked(evt);
+                DRINK_item_1MouseClicked(evt);
             }
         });
-        DRINKPanel.add(coke, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 190, 110));
+        DRINKPanel.add(DRINK_item_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        cyder.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        cyder.setText("사이다");
-        cyder.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        cyder.addMouseListener(new java.awt.event.MouseAdapter() {
+        DRINK_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\cider.png")); // NOI18N
+        DRINK_item_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cyderMouseClicked(evt);
+                DRINK_item_2MouseClicked(evt);
             }
         });
-        DRINKPanel.add(cyder, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 190, 110));
+        DRINKPanel.add(DRINK_item_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        fanta.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        fanta.setText("환타");
-        fanta.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        fanta.addMouseListener(new java.awt.event.MouseAdapter() {
+        DRINK_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\fanta.png")); // NOI18N
+        DRINK_item_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                fantaMouseClicked(evt);
+                DRINK_item_3MouseClicked(evt);
             }
         });
-        DRINKPanel.add(fanta, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 190, 110));
+        DRINKPanel.add(DRINK_item_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
+
+        DRINK_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\americano.png")); // NOI18N
+        DRINK_item_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_4MouseClicked(evt);
+            }
+        });
+        DRINKPanel.add(DRINK_item_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+
+        DRINK_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\icetea.png")); // NOI18N
+        DRINK_item_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_5MouseClicked(evt);
+            }
+        });
+        DRINKPanel.add(DRINK_item_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
+
+        DRINK_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\smoothie.png")); // NOI18N
+        DRINK_item_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        DRINK_item_6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DRINK_item_6MouseClicked(evt);
+            }
+        });
+        DRINKPanel.add(DRINK_item_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, -1, -1));
 
         getContentPane().add(DRINKPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 690, 270));
 
@@ -198,32 +223,59 @@ public class Order extends javax.swing.JFrame {
         FOODPanel.setPreferredSize(new java.awt.Dimension(650, 240));
         FOODPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        dduckbboki.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        dduckbboki.setText("떡볶이");
-        dduckbboki.addMouseListener(new java.awt.event.MouseAdapter() {
+        FOOD_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\ramen.png")); // NOI18N
+        FOOD_item_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                dduckbbokiMouseClicked(evt);
+                FOOD_item_1MouseClicked(evt);
             }
         });
-        FOODPanel.add(dduckbboki, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 190, 110));
+        FOODPanel.add(FOOD_item_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        friedRice.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        friedRice.setText("볶음밥");
-        friedRice.addMouseListener(new java.awt.event.MouseAdapter() {
+        FOOD_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\friedRice.png")); // NOI18N
+        FOOD_item_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                friedRiceMouseClicked(evt);
+                FOOD_item_2MouseClicked(evt);
             }
         });
-        FOODPanel.add(friedRice, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 190, 110));
+        FOODPanel.add(FOOD_item_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        ramen.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        ramen.setText("라면");
-        ramen.addMouseListener(new java.awt.event.MouseAdapter() {
+        FOOD_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\dduckbboki.png")); // NOI18N
+        FOOD_item_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                ramenMouseClicked(evt);
+                FOOD_item_3MouseClicked(evt);
             }
         });
-        FOODPanel.add(ramen, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 190, 110));
+        FOODPanel.add(FOOD_item_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
+
+        FOOD_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\addEgg.png")); // NOI18N
+        FOOD_item_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_4MouseClicked(evt);
+            }
+        });
+        FOODPanel.add(FOOD_item_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+
+        FOOD_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\addCheeze.png")); // NOI18N
+        FOOD_item_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_5MouseClicked(evt);
+            }
+        });
+        FOODPanel.add(FOOD_item_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
+
+        FOOD_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\addRice.png")); // NOI18N
+        FOOD_item_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        FOOD_item_6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                FOOD_item_6MouseClicked(evt);
+            }
+        });
+        FOODPanel.add(FOOD_item_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, -1, -1));
 
         getContentPane().add(FOODPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 690, 270));
         FOODPanel.getAccessibleContext().setAccessibleParent(this);
@@ -231,76 +283,116 @@ public class Order extends javax.swing.JFrame {
         SNACKPanel.setBackground(new java.awt.Color(32, 47, 90));
         SNACKPanel.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        friedPotato.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        friedPotato.setText("감자튀김");
-        friedPotato.addMouseListener(new java.awt.event.MouseAdapter() {
+        SNACK_item_1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\hotdog.png")); // NOI18N
+        SNACK_item_1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                friedPotatoMouseClicked(evt);
+                SNACK_item_1MouseClicked(evt);
             }
         });
-        SNACKPanel.add(friedPotato, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 190, 110));
+        SNACKPanel.add(SNACK_item_1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
 
-        hotDog.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        hotDog.setText("핫도그");
-        hotDog.addMouseListener(new java.awt.event.MouseAdapter() {
+        SNACK_item_2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\tacoyaki.png")); // NOI18N
+        SNACK_item_2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_2.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                hotDogMouseClicked(evt);
+                SNACK_item_2MouseClicked(evt);
             }
         });
-        SNACKPanel.add(hotDog, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 190, 110));
+        SNACKPanel.add(SNACK_item_2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, -1, -1));
 
-        cheezeStick.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        cheezeStick.setText("치즈스틱");
-        cheezeStick.addMouseListener(new java.awt.event.MouseAdapter() {
+        SNACK_item_3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\cheezeStick.png")); // NOI18N
+        SNACK_item_3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_3.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cheezeStickMouseClicked(evt);
+                SNACK_item_3MouseClicked(evt);
             }
         });
-        SNACKPanel.add(cheezeStick, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 70, 190, 110));
+        SNACKPanel.add(SNACK_item_3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 20, -1, -1));
+
+        SNACK_item_4.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\potatoFried.png")); // NOI18N
+        SNACK_item_4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_4MouseClicked(evt);
+            }
+        });
+        SNACKPanel.add(SNACK_item_4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+
+        SNACK_item_5.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\ggang.png")); // NOI18N
+        SNACK_item_5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_5.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_5MouseClicked(evt);
+            }
+        });
+        SNACKPanel.add(SNACK_item_5, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 140, -1, -1));
+
+        SNACK_item_6.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\gorebab.png")); // NOI18N
+        SNACK_item_6.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        SNACK_item_6.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                SNACK_item_6MouseClicked(evt);
+            }
+        });
+        SNACKPanel.add(SNACK_item_6, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 140, -1, -1));
 
         getContentPane().add(SNACKPanel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, 690, 270));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel1.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\exit.png")); // NOI18N
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 0, -1, 50));
+
+        jLabel3.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\user.png")); // NOI18N
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(22, 0, -1, 50));
+
         UserNameField.setEditable(false);
         UserNameField.setBackground(new java.awt.Color(255, 255, 255));
         UserNameField.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
         UserNameField.setBorder(null);
         UserNameField.setFocusable(false);
-        jPanel4.add(UserNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 90, 30));
+        jPanel4.add(UserNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 10, 90, 30));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 690, 50));
 
         jPanel5.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel2.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\food.png")); // NOI18N
+        jPanel5.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(46, 22, -1, -1));
+
         jLabel4.setFont(new java.awt.Font("맑은 고딕", 1, 36)); // NOI18N
         jLabel4.setText("음식 주문");
-        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, -1, -1));
+        jPanel5.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(128, 22, -1, -1));
 
         jLabel5.setFont(new java.awt.Font("맑은 고딕", 0, 15)); // NOI18N
         jLabel5.setText("메뉴를 담아서 주문해주세요.");
-        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 70, -1, -1));
+        jPanel5.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, -1, -1));
 
-        refresh.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        refresh.setText("초기화");
-        refresh.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        refresh.addMouseListener(new java.awt.event.MouseAdapter() {
+        BuyButton.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\order.png")); // NOI18N
+        BuyButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BuyButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                refreshMouseClicked(evt);
+                BuyButtonMouseClicked(evt);
             }
         });
-        jPanel5.add(refresh, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 30, 110, 50));
+        jPanel5.add(BuyButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 20, -1, -1));
 
-        order.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        order.setText("주문하기");
-        order.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        order.addMouseListener(new java.awt.event.MouseAdapter() {
+        RefrashButton.setIcon(new javax.swing.ImageIcon("D:\\NetbeansProjects\\Design_Pattern_Project\\image\\reload.png")); // NOI18N
+        RefrashButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        RefrashButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                orderMouseClicked(evt);
+                RefrashButtonMouseClicked(evt);
             }
         });
-        jPanel5.add(order, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 30, 110, 50));
+        jPanel5.add(RefrashButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 20, -1, -1));
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 690, 110));
 
@@ -391,6 +483,11 @@ public class Order extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        
+        System.exit(0);     // 종료 버튼 클릭
+    }//GEN-LAST:event_jLabel1MouseClicked
+
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
         // drink 카테고리 선택
         DRINKPanel.setVisible(true);
@@ -430,7 +527,8 @@ public class Order extends javax.swing.JFrame {
         NoCategories.setEnabled(false);
     }//GEN-LAST:event_jLabel11MouseClicked
 
-    private void refreshMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_refreshMouseClicked
+    private void RefrashButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_RefrashButtonMouseClicked
+        
         // 초기화 버튼 클릭
         
         for(int i=0; i<14; i++) {
@@ -440,10 +538,27 @@ public class Order extends javax.swing.JFrame {
         
         RowCount = 0;
         
-    }//GEN-LAST:event_refreshMouseClicked
+    }//GEN-LAST:event_RefrashButtonMouseClicked
 
-    private void orderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderMouseClicked
-        // 주문 버튼 클릭
+    private void DRINK_item_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_1MouseClicked
+        
+        // 콜라 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("콜라", RowCount, 0);
+            MenuTable.setValueAt(1500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+        
+        //String CourseName = (String) MenuTable.getValueAt(selectedRow, 1);
+    }//GEN-LAST:event_DRINK_item_1MouseClicked
+
+    private void BuyButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BuyButtonMouseClicked
+        
+        // 구매 버튼 클릭
         
         if(RowCount == 0) { // 메뉴를 아무것도 고르지 않았을 경우
             JOptionPane.showInternalMessageDialog(null, "메뉴를 골라주세요.");
@@ -482,22 +597,9 @@ public class Order extends javax.swing.JFrame {
             JOptionPane.showInternalMessageDialog(null, "주문이 접수되었습니다.");
         }
         
-    }//GEN-LAST:event_orderMouseClicked
+    }//GEN-LAST:event_BuyButtonMouseClicked
 
-    private void cokeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cokeMouseClicked
-        // 콜라 클릭
-        
-        if (RowCount < 14) {
-            MenuTable.setValueAt("콜라", RowCount, 0);
-            MenuTable.setValueAt(1500, RowCount, 1);
-        
-            RowCount++;
-        } else {
-            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
-        }
-    }//GEN-LAST:event_cokeMouseClicked
-
-    private void cyderMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cyderMouseClicked
+    private void DRINK_item_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_2MouseClicked
         // 사이다 클릭
         
         if (RowCount < 14) {
@@ -508,9 +610,9 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_cyderMouseClicked
+    }//GEN-LAST:event_DRINK_item_2MouseClicked
 
-    private void fantaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_fantaMouseClicked
+    private void DRINK_item_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_3MouseClicked
         // 환타 클릭
         
         if (RowCount < 14) {
@@ -521,9 +623,48 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_fantaMouseClicked
+    }//GEN-LAST:event_DRINK_item_3MouseClicked
 
-    private void ramenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ramenMouseClicked
+    private void DRINK_item_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_4MouseClicked
+        // 아메리카노 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("아메리카노", RowCount, 0);
+            MenuTable.setValueAt(2100, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_4MouseClicked
+
+    private void DRINK_item_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_5MouseClicked
+        // 아이스티 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("아이스티", RowCount, 0);
+            MenuTable.setValueAt(1900, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_5MouseClicked
+
+    private void DRINK_item_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DRINK_item_6MouseClicked
+        // 스무디 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("스무디", RowCount, 0);
+            MenuTable.setValueAt(2500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_DRINK_item_6MouseClicked
+
+    private void FOOD_item_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_1MouseClicked
         // 라면 클릭
         
         if (RowCount < 14) {
@@ -534,9 +675,9 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_ramenMouseClicked
+    }//GEN-LAST:event_FOOD_item_1MouseClicked
 
-    private void friedRiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friedRiceMouseClicked
+    private void FOOD_item_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_2MouseClicked
         // 볶음밥 클릭
         
         if (RowCount < 14) {
@@ -547,9 +688,9 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_friedRiceMouseClicked
+    }//GEN-LAST:event_FOOD_item_2MouseClicked
 
-    private void dduckbbokiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dduckbbokiMouseClicked
+    private void FOOD_item_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_3MouseClicked
         // 떡볶이 클릭
         
         if (RowCount < 14) {
@@ -560,9 +701,48 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_dduckbbokiMouseClicked
+    }//GEN-LAST:event_FOOD_item_3MouseClicked
 
-    private void hotDogMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_hotDogMouseClicked
+    private void FOOD_item_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_4MouseClicked
+        // 계란추가 클릭
+       
+        if (RowCount < 14) {
+            MenuTable.setValueAt("계란추가", RowCount, 0);
+            MenuTable.setValueAt(500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_4MouseClicked
+
+    private void FOOD_item_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_5MouseClicked
+        // 치즈추가 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("치즈추가", RowCount, 0);
+            MenuTable.setValueAt(500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_5MouseClicked
+
+    private void FOOD_item_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_FOOD_item_6MouseClicked
+        // 밥추가 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("밥추가", RowCount, 0);
+            MenuTable.setValueAt(1000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_FOOD_item_6MouseClicked
+
+    private void SNACK_item_1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_1MouseClicked
         // 핫도그 클릭
         
         if (RowCount < 14) {
@@ -573,9 +753,22 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_hotDogMouseClicked
+    }//GEN-LAST:event_SNACK_item_1MouseClicked
 
-    private void cheezeStickMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cheezeStickMouseClicked
+    private void SNACK_item_2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_2MouseClicked
+        // 타코야키 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("타코야키", RowCount, 0);
+            MenuTable.setValueAt(3000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_2MouseClicked
+
+    private void SNACK_item_3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_3MouseClicked
         // 치즈스틱 클릭
         
         if (RowCount < 14) {
@@ -586,9 +779,9 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_cheezeStickMouseClicked
+    }//GEN-LAST:event_SNACK_item_3MouseClicked
 
-    private void friedPotatoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friedPotatoMouseClicked
+    private void SNACK_item_4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_4MouseClicked
         // 감자튀김 클릭
         
         if (RowCount < 14) {
@@ -599,7 +792,33 @@ public class Order extends javax.swing.JFrame {
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
         }
-    }//GEN-LAST:event_friedPotatoMouseClicked
+    }//GEN-LAST:event_SNACK_item_4MouseClicked
+
+    private void SNACK_item_5MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_5MouseClicked
+        // 새우깡 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("새우깡", RowCount, 0);
+            MenuTable.setValueAt(1500, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_5MouseClicked
+
+    private void SNACK_item_6MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SNACK_item_6MouseClicked
+        // 고래밥 클릭
+        
+        if (RowCount < 14) {
+            MenuTable.setValueAt("고래밥", RowCount, 0);
+            MenuTable.setValueAt(1000, RowCount, 1);
+        
+            RowCount++;
+        } else {
+            JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
+        }
+    }//GEN-LAST:event_SNACK_item_6MouseClicked
 
     /**
      * @param args the command line arguments
@@ -638,23 +857,38 @@ public class Order extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel BuyButton;
     private javax.swing.JPanel DRINKPanel;
+    private javax.swing.JLabel DRINK_item_1;
+    private javax.swing.JLabel DRINK_item_2;
+    private javax.swing.JLabel DRINK_item_3;
+    private javax.swing.JLabel DRINK_item_4;
+    private javax.swing.JLabel DRINK_item_5;
+    private javax.swing.JLabel DRINK_item_6;
     private javax.swing.JPanel FOODPanel;
+    private javax.swing.JLabel FOOD_item_1;
+    private javax.swing.JLabel FOOD_item_2;
+    private javax.swing.JLabel FOOD_item_3;
+    private javax.swing.JLabel FOOD_item_4;
+    private javax.swing.JLabel FOOD_item_5;
+    private javax.swing.JLabel FOOD_item_6;
     private javax.swing.JTable MenuTable;
     private javax.swing.JPanel NoCategories;
+    private javax.swing.JLabel RefrashButton;
     private javax.swing.JPanel SNACKPanel;
+    private javax.swing.JLabel SNACK_item_1;
+    private javax.swing.JLabel SNACK_item_2;
+    private javax.swing.JLabel SNACK_item_3;
+    private javax.swing.JLabel SNACK_item_4;
+    private javax.swing.JLabel SNACK_item_5;
+    private javax.swing.JLabel SNACK_item_6;
     private javax.swing.JTextField UserNameField;
-    private javax.swing.JButton cheezeStick;
-    private javax.swing.JButton coke;
-    private javax.swing.JButton cyder;
-    private javax.swing.JButton dduckbboki;
-    private javax.swing.JButton fanta;
-    private javax.swing.JButton friedPotato;
-    private javax.swing.JButton friedRice;
-    private javax.swing.JButton hotDog;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
@@ -665,8 +899,5 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JButton order;
-    private javax.swing.JButton ramen;
-    private javax.swing.JButton refresh;
     // End of variables declaration//GEN-END:variables
 }
