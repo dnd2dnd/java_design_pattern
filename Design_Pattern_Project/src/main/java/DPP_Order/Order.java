@@ -17,8 +17,12 @@ import java.util.logging.Logger;
  * @author MongGu
  */
 public class Order extends javax.swing.JFrame {
+    static int friedricenum=0;
+    static int tteokbokkinum=0;
     static int ramennum=0;
     static int addegg=0;
+    static int addcheese=0;
+    static int addrice=0;
     int RowCount;
     String UserName;
     
@@ -687,7 +691,7 @@ public class Order extends javax.swing.JFrame {
 
     private void friedRiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_friedRiceMouseClicked
         // 볶음밥 클릭
-        
+        friedricenum=1;
         if (RowCount < 14) {
             MenuTable.setValueAt("볶음밥", RowCount, 0);
             MenuTable.setValueAt(3500, RowCount, 1);
@@ -704,7 +708,7 @@ public class Order extends javax.swing.JFrame {
 
     private void dduckbbokiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_dduckbbokiMouseClicked
         // 떡볶이 클릭
-        
+        tteokbokkinum=1;
         if (RowCount < 14) {
             MenuTable.setValueAt("떡볶이", RowCount, 0);
             MenuTable.setValueAt(4000, RowCount, 1);
@@ -765,23 +769,70 @@ public class Order extends javax.swing.JFrame {
 
     private void addCheezeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addCheezeMouseClicked
         // 치즈 추가 클릭
-
+        addcheese++;
     }//GEN-LAST:event_addCheezeMouseClicked
 
     private void addRiceMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addRiceMouseClicked
         // 밥 추가 클릭
-
+        addrice++;
     }//GEN-LAST:event_addRiceMouseClicked
 
     private void OKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OKMouseClicked
         // 선택 완료 클릭
-        if(ramennum==1){
+        if(ramennum>0){
+            
             Food ramen = new Ramen();
             for(int i=0;i<addegg;i++){
-                ramen= new AddEgg(ramen);
+                ramen = new AddEgg(ramen);
             }
-            System.out.println("메뉴 : "+ramen.getFoodName());
-            System.out.println("가격 : "+ramen.cost());
+            for(int i=0;i<addcheese;i++){
+                ramen = new AddCheese(ramen);
+            }
+            for(int i=0;i<addrice;i++){
+                ramen = new AddRice(ramen);
+            }
+            JOptionPane.showMessageDialog(null,"메뉴는 : "+ramen.getFoodName()+"입니다.\n총 가격은"+ramen.cost()+"입니다.");
+            MenuTable.setValueAt(ramen.getFoodName(), RowCount-1, 0);
+            MenuTable.setValueAt(ramen.cost(), RowCount-1, 1);
+            ramennum=0;
+            foodDeco.setVisible(false);
+            
+        }else if(tteokbokkinum>0){
+            
+            Food teokbokki = new Tteokbokki();
+            for(int i=0;i<addegg;i++){
+                teokbokki = new AddEgg(teokbokki);
+            }
+            for(int i=0;i<addcheese;i++){
+                teokbokki = new AddCheese(teokbokki);
+            }
+            for(int i=0;i<addrice;i++){
+                teokbokki = new AddRice(teokbokki);
+            }
+            JOptionPane.showMessageDialog(null,"메뉴는 : "+teokbokki.getFoodName()+"입니다.\n총 가격은"+teokbokki.cost()+"입니다.");
+            MenuTable.setValueAt(teokbokki.getFoodName(), RowCount-1, 0);
+            MenuTable.setValueAt(teokbokki.cost(), RowCount-1, 1);            
+            tteokbokkinum=0;
+            foodDeco.setVisible(false);
+            
+        }else if(friedricenum>0){
+            
+            Food friedrice = new FriedRice();
+            for(int i=0;i<addegg;i++){
+                friedrice = new AddEgg(friedrice);
+            }
+            for(int i=0;i<addcheese;i++){
+                friedrice = new AddCheese(friedrice);
+            }
+            for(int i=0;i<addrice;i++){
+                friedrice = new AddRice(friedrice);
+            }
+            JOptionPane.showMessageDialog(null,"메뉴는 : "+friedrice.getFoodName()+"입니다.\n총 가격은"+friedrice.cost()+"입니다.");
+            MenuTable.setValueAt(friedrice.getFoodName(), RowCount-1, 0);
+            MenuTable.setValueAt(friedrice.cost(), RowCount-1, 1);  
+            friedricenum=0;
+            foodDeco.setVisible(false);
+            
         }
     }//GEN-LAST:event_OKMouseClicked
 
