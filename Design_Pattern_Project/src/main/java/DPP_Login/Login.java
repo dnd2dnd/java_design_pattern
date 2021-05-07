@@ -1,11 +1,12 @@
 package DPP_Login;
 
+import DPP_Order.Order;
 import DPP_Seat.Seat_Single;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
     static int IDS=0; // 총 아이디 갯수
-    
+    LoginLog loginlog = new LoginLog();
     UserIdInfo[] result = new UserIdInfo[100];
     public Login() {
         initComponents();
@@ -221,7 +222,7 @@ public class Login extends javax.swing.JFrame {
                         .build();
                 System.out.println(result[IDS].UserPrint());
                 IDS++;
-                
+                SignUp.setVisible(false);
             }
         }
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -243,7 +244,12 @@ public class Login extends javax.swing.JFrame {
             }            
         }
         if(login){
+            loginlog.setName(name);
             JOptionPane.showMessageDialog(null,"로그인 성공 \n"+name+"님 안녕하세요"+seat.getNum()+"번 자리입니다.");
+            Order next = new Order();
+            next.setVisible(true);
+            Login before = new Login();
+            before.setVisible(false);
         }else{
             JOptionPane.showMessageDialog(null,"로그인 실패.");
         }
