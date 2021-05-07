@@ -17,7 +17,8 @@ import java.util.logging.Logger;
  * @author MongGu
  */
 public class Order extends javax.swing.JFrame {
-    
+    static int ramennum=0;
+    static int addegg=0;
     int RowCount;
     String UserName;
     
@@ -107,6 +108,11 @@ public class Order extends javax.swing.JFrame {
         addEgg.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 addEggMouseClicked(evt);
+            }
+        });
+        addEgg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEggActionPerformed(evt);
             }
         });
         jPanel1.add(addEgg, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 140, 102));
@@ -322,6 +328,11 @@ public class Order extends javax.swing.JFrame {
                 dduckbbokiMouseClicked(evt);
             }
         });
+        dduckbboki.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                dduckbbokiActionPerformed(evt);
+            }
+        });
         FOODPanel.add(dduckbboki, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 70, 190, 110));
 
         friedRice.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
@@ -338,6 +349,11 @@ public class Order extends javax.swing.JFrame {
         ramen.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ramenMouseClicked(evt);
+            }
+        });
+        ramen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ramenActionPerformed(evt);
             }
         });
         FOODPanel.add(ramen, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 190, 110));
@@ -654,7 +670,7 @@ public class Order extends javax.swing.JFrame {
 
     private void ramenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ramenMouseClicked
         // 라면 클릭
-        
+        ramennum=1;
         if (RowCount < 14) {
             MenuTable.setValueAt("라면", RowCount, 0);
             MenuTable.setValueAt(3000, RowCount, 1);
@@ -662,7 +678,7 @@ public class Order extends javax.swing.JFrame {
             foodDeco.setVisible(true);
             foodDeco.setLocation(200, 200);
             foodDeco.setSize(510, 300);
-        
+
             RowCount++;
         } else {
             JOptionPane.showInternalMessageDialog(null, "더 이상 주문할 수 없습니다.");
@@ -744,7 +760,7 @@ public class Order extends javax.swing.JFrame {
 
     private void addEggMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addEggMouseClicked
         // 계란 추가 클릭
-
+        addegg++;
     }//GEN-LAST:event_addEggMouseClicked
 
     private void addCheezeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addCheezeMouseClicked
@@ -759,7 +775,14 @@ public class Order extends javax.swing.JFrame {
 
     private void OKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OKMouseClicked
         // 선택 완료 클릭
-
+        if(ramennum==1){
+            Food ramen = new Ramen();
+            for(int i=0;i<addegg;i++){
+                ramen= new AddEgg(ramen);
+            }
+            System.out.println("메뉴 : "+ramen.getFoodName());
+            System.out.println("가격 : "+ramen.cost());
+        }
     }//GEN-LAST:event_OKMouseClicked
 
     private void OK1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OK1MouseClicked
@@ -781,6 +804,17 @@ public class Order extends javax.swing.JFrame {
         // medium 클릭
 
     }//GEN-LAST:event_mediumMouseClicked
+
+    private void ramenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ramenActionPerformed
+    }//GEN-LAST:event_ramenActionPerformed
+
+    private void dduckbbokiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_dduckbbokiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_dduckbbokiActionPerformed
+
+    private void addEggActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEggActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_addEggActionPerformed
 
     /**
      * @param args the command line arguments
