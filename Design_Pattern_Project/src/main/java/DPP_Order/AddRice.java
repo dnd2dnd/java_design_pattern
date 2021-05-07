@@ -11,7 +11,7 @@ public class AddRice extends FoodDecorator{
 
     @Override
     public String getFoodName() {
-        return food.getFoodName()+", 밥추가";
+        return food.getFoodName()+"+ 밥추가 ";
     }
 
     @Override

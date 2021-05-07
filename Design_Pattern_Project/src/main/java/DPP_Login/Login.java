@@ -248,8 +248,7 @@ public class Login extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null,"로그인 성공 \n"+name+"님 안녕하세요"+seat.getNum()+"번 자리입니다.");
             Order next = new Order();
             next.setVisible(true);
-            Login before = new Login();
-            before.setVisible(false);
+            dispose();
         }else{
             JOptionPane.showMessageDialog(null,"로그인 실패.");
         }

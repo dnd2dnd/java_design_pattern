@@ -3,7 +3,6 @@ DPP_Cal\PaymentJFrame$2.class
 DPP_Seat\Seat_Single.class
 DPP_Order\AddRice.class
 DPP_Seat\Seat$14.class
-DPP_Order\Order$26.class
 DPP_Seat\Seat$9.class
 DPP_Cal\PaymentJFrame$5.class
 DPP_Order\Order$4.class
@@ -25,7 +24,6 @@ DPP_Login\Login$2.class
 DPP_Order\TestDrive.class
 DPP_Order\Order$12.class
 DPP_Login\Login$3.class
-DPP_Order\Order$27.class
 DPP_Order\Order$7.class
 DPP_Order\Order$19.class
 DPP_Cal\Card.class
@@ -59,7 +57,6 @@ DPP_Login\Login$4.class
 DPP_Login\Users.class
 DPP_Login\UserIdBuilder.class
 DPP_Order\Order$15.class
-DPP_Order\Order$25.class
 DPP_Order\FoodOrder.class
 DPP_Order\Order$2.class
 DPP_Cal\PaymentJFrame$11.class

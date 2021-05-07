@@ -11,7 +11,7 @@ public class AddEgg extends FoodDecorator{
 
     @Override
     public String getFoodName() {
-        return food.getFoodName()+", 계란추가";
+        return food.getFoodName()+"+ 계란추가 ";
     }
 
     @Override

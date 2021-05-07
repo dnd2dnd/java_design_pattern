@@ -11,7 +11,7 @@ public class AddCheese extends FoodDecorator{
     
     @Override
     public String getFoodName() {
-        return food.getFoodName()+", 치즈추가";
+        return food.getFoodName()+"+ 치즈추가 ";
     }
 
     @Override
