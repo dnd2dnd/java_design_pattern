@@ -2,8 +2,6 @@ package DPP_Order;
 
 public class AddCheese extends FoodDecorator{
 
-    Food food;
-    
     public AddCheese(Food food) {
         super();
         this.food = food;

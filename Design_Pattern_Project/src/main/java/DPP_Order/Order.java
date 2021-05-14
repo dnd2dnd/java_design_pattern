@@ -10,6 +10,7 @@ import java.io.*;
  */
 public class Order extends javax.swing.JFrame {
     LoginLog loginlog = new LoginLog();
+    
     static int friedricenum = 0;
     static int tteokbokkinum = 0;
     static int ramennum = 0;
@@ -32,6 +33,7 @@ public class Order extends javax.swing.JFrame {
      */
     public Order() {
         initComponents();
+        setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
         
         DRINKPanel.setVisible(false);
         FOODPanel.setVisible(false);
@@ -653,7 +655,8 @@ public class Order extends javax.swing.JFrame {
             MenuTable.setValueAt(2000, RowCount, 1);
             
             drinkDeco.setVisible(true);
-            drinkDeco.setLocation(200, 200);
+            //drinkDeco.setLocation(200, 200);
+            drinkDeco.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
             drinkDeco.setSize(510, 300);
             
             TotalPrice += 2000;
@@ -675,7 +678,8 @@ public class Order extends javax.swing.JFrame {
             MenuTable.setValueAt(2800, RowCount, 1);
             
             drinkDeco.setVisible(true);
-            drinkDeco.setLocation(200, 200);
+            //drinkDeco.setLocation(200, 200);
+            drinkDeco.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
             drinkDeco.setSize(510, 300);
             
             TotalPrice += 2800;
@@ -697,7 +701,8 @@ public class Order extends javax.swing.JFrame {
             MenuTable.setValueAt(3000, RowCount, 1);
             
             foodDeco.setVisible(true);
-            foodDeco.setLocation(200, 200);
+            foodDeco.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+            //foodDeco.setLocation(200, 200);
             foodDeco.setSize(510, 300);
             
             TotalPrice += 3000;
@@ -719,7 +724,8 @@ public class Order extends javax.swing.JFrame {
             MenuTable.setValueAt(3500, RowCount, 1);
             
             foodDeco.setVisible(true);
-            foodDeco.setLocation(200, 200);
+            foodDeco.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+            //foodDeco.setLocation(200, 200);
             foodDeco.setSize(510, 300);
             
             TotalPrice += 3500;
@@ -741,7 +747,8 @@ public class Order extends javax.swing.JFrame {
             MenuTable.setValueAt(4000, RowCount, 1);
             
             foodDeco.setVisible(true);
-            foodDeco.setLocation(200, 200);
+            foodDeco.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+            //foodDeco.setLocation(200, 200);
             foodDeco.setSize(510, 300);
             
             TotalPrice += 4000;

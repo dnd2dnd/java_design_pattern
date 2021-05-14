@@ -1,8 +1,6 @@
 package DPP_Order;
 
 public class AddEgg extends FoodDecorator{
-
-    Food food;
     
     public AddEgg(Food food) {
         super();
