@@ -10,7 +10,10 @@ package DPP_Cal;
  * @author USER
  */
 public class Card extends Payment { // Card 클래스
-    @Override
-    public void pay() {
+    public Card(String orderName) {
+        super(orderName); 
+    }
+    public Card(int price) {
+        super(price);
     }
 }

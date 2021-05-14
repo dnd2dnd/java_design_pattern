@@ -10,5 +10,6 @@ package DPP_Cal;
  * @author USER
  */
 public interface PaymentStrategy { // paymentStrategy 인터페이스
-    public void pay();
+    public void orderhistory(String orderName, int price);
+   
 }
