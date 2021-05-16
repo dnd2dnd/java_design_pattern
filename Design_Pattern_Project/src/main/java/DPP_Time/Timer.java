@@ -1,50 +1,24 @@
 package DPP_Time;
 
-import java.util.ArrayList;
+import DPP_Time.*;
+
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 
-public class Time extends javax.swing.JFrame implements Subject {
-    TimeSave timesave = TimeSave.getInstance();
-    
-    public int hour;
-    public int min;
-    public int sec;
-    public ArrayList<TimeObserver> observer = new ArrayList();
-    public boolean stopbutton = false;    
-    
-    public Time() {
+public class Timer extends javax.swing.JFrame {
+        
+    TimeData timeData = new TimeData();
+    CurrentTime currentTime = new CurrentTime(timeData);
+    TimeNotice timeNotice = new TimeNotice(timeData);
+
+    public Timer() {
         initComponents();
         setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        
+        timeData.setMeasurements(0,5,30);    
         TimeSet T = new TimeSet();
         new Thread(T).start();
     }
-    
-    @Override
-    public void registerObserver(TimeObserver timeobserver) {
-        observer.add(timeobserver);
-    }
 
-    @Override
-    public void unregisterObserver(TimeObserver timeobserver) {
-        observer.remove(timeobserver);
-    }
-
-    @Override
-    public void updateObserver() {
-        for(TimeObserver timeobserver:observer){
-            timeobserver.update();
-        }
-    }
-    
-    public void setTime(int hour,int min, int sec){
-        this.hour=hour;
-        this.min=min;
-        this.sec=sec;
-        updateObserver();
-    }
-    
     class TimeSet implements Runnable {
         private String dday = "";
         private String time = "";
@@ -53,10 +27,7 @@ public class Time extends javax.swing.JFrame implements Subject {
         public void run() {
             while(true) {
                 try { //트라이 
-                if(stopbutton==true){ 
-                    setVisible(false);
-                    break;
-                }
+
                 Calendar t = Calendar.getInstance();
                 String sday = "";//정수형으로 받은 요일을 문자로 변경
 
@@ -64,9 +35,9 @@ public class Time extends javax.swing.JFrame implements Subject {
                 int month = t.get(Calendar.MONTH);//월을 받아온다
                 int date = t.get(Calendar.DATE);//일을 받아온다
                 int amPm = t.get(Calendar.AM_PM);//오전/오후를 받아온다
-                int hour = timesave.getTimeHour();//시를 받아온다
-                int min = timesave.getTimeMin();//분을 받아온다
-                int sec = timesave.getTimeSec();//초를 받아온다
+                int hour = timeData.getHour();//시를 받아온다
+                int min = timeData.getMinutes();//분을 받아온다
+                int sec = timeData.getSecond();//초를 받아온다
                 int day= t.get(Calendar.DAY_OF_WEEK);//요일을 정수형으로 리턴1=일~7은토
                 String ampm=amPm==Calendar.AM? "PM":"AM";//비교해서 pm이나 am을 ampm에 저장
              
@@ -87,37 +58,29 @@ public class Time extends javax.swing.JFrame implements Subject {
                         break;//break;
                 }
         
-                dday = (year+"."+month+"."+date+"."+sday+" day");//one이라는 문자열에 저장
+                dday = (year+"."+(month+1)+"."+date+"."+sday+" day");//one이라는 문자열에 저장
                 time = (hour+":"+min+":"+sec+" sec");//two라는 문자열에 저장
 
                 useTime.setText(dday);//first의 내용을 one(string)으로 설정한다
                 remainTime.setText(time);//second의 내용을 two(string)으로 설정한다.
-                if(timesave.getTimeSec()-1<0){
-                    if(timesave.getTimeMin()-1<0){
-                        if(timesave.getTimeHour()-1<0){
-                            if(timesave.getTimeHour()==0 && timesave.getTimeMin()==0 && timesave.getTimeSec()==0){
-                                JOptionPane.showMessageDialog(null,"사용시간을 모두 사용하여 프로그램을 종료합니다.");
-                                stopbutton=true;
-                            }
+                if(timeData.getSecond()-1<0){
+                    if(timeData.getMinutes()-1<0){
+                        if(timeData.getHour()-1<0){
                         }else{
-                            timesave.setTimeHour(hour-1);
-                            timesave.setTimeMin(60);
+                            timeData.setHourM(hour-1,59);
                         }
                     }else{
-                        timesave.setTimeMin(min-1);
-                        timesave.setTimeSec(60);
+                        timeData.setMinSe(min-1,59);
                     }
                 }else{
-                    timesave.setTimeSec(sec-1);
+                    timeData.setSecond(sec-1);
                 }
-                if(timesave.update()!=0){
-                    timeState.setText(Integer.toString(timesave.update())+"분 남았습니다.");
-                    JOptionPane.showMessageDialog(null, "사용시간이 " + Integer.toString(timesave.update())+"분 남았습니다.");
-                }
-                
-                Thread.sleep(100);//0.1초
+
+
+                Thread.sleep(10);//0.1초
                 first.setText(dday);//first의 내용을 one(string)으로 설정한다
-                second.setText(time);//second의 내용을 two(string)으로 설정한다.
+                second.setText(currentTime.display());//second의 내용을 two(string)으로 설정한다.
+                timeState.setText(timeNotice.display());
                 repaint();
             } catch(Exception e) {
                  System.out.println("오류 발생");    
@@ -243,8 +206,6 @@ public class Time extends javax.swing.JFrame implements Subject {
             .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
         );
 
-        CASH.setPreferredSize(new java.awt.Dimension(240, 160));
-
         jPanel3.setMinimumSize(new java.awt.Dimension(150, 143));
         jPanel3.setPreferredSize(new java.awt.Dimension(220, 160));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -291,7 +252,6 @@ public class Time extends javax.swing.JFrame implements Subject {
         );
 
         CARD.setMinimumSize(new java.awt.Dimension(400, 300));
-        CARD.setPreferredSize(new java.awt.Dimension(400, 300));
 
         jPanel4.setBackground(new java.awt.Color(106, 116, 145));
         jPanel4.setMinimumSize(new java.awt.Dimension(400, 288));
@@ -583,49 +543,49 @@ public class Time extends javax.swing.JFrame implements Subject {
     private void c1hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        timesave.setTimeHour(1);
+        timeData.setHour(1);
     }//GEN-LAST:event_c1hourActionPerformed
 
     private void c2hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c2hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        timesave.setTimeHour(2);
+        timeData.setHour(2);
     }//GEN-LAST:event_c2hourActionPerformed
 
     private void c4hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c4hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        timesave.setTimeHour(4);
+        timeData.setHour(4);
     }//GEN-LAST:event_c4hourActionPerformed
 
     private void c30hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c30hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴        
-        timesave.setTimeHour(30);
+        timeData.setHour(30);
     }//GEN-LAST:event_c30hourActionPerformed
 
     private void c5hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c5hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴        
-        timesave.setTimeHour(5);
+        timeData.setHour(5);
     }//GEN-LAST:event_c5hourActionPerformed
 
     private void c10hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c10hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        timesave.setTimeHour(10);
+        timeData.setHour(10);
     }//GEN-LAST:event_c10hourActionPerformed
 
     private void c3hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c3hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        timesave.setTimeHour(3);
+        timeData.setHour(3);
     }//GEN-LAST:event_c3hourActionPerformed
 
     private void c20hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c20hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        timesave.setTimeHour(20);
+        timeData.setHour(20);
     }//GEN-LAST:event_c20hourActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -659,20 +619,23 @@ public class Time extends javax.swing.JFrame implements Subject {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Time.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Timer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Time.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Timer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Time.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Timer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Time.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(Timer.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new Time().setVisible(true);
+                new Timer().setVisible(true);
             }
         });
     }

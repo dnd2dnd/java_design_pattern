@@ -14,7 +14,7 @@ public class AddCheese extends FoodDecorator{
 
     @Override
     public int cost() {
-        return food.cost()+500;
+        return food.cost()+600;
     }
     
 }

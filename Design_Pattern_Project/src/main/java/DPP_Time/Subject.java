@@ -1,7 +1,7 @@
 package DPP_Time;
 
 public interface Subject {
-    void registerObserver(TimeObserver timeobserver);
-    void unregisterObserver(TimeObserver timeobserver);
-    void updateObserver();
+	public void registerObserver(Observer o);
+	public void removeObserver(Observer o);
+	public void notifyObservers();
 }
