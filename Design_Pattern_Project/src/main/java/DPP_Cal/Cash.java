@@ -16,5 +16,4 @@ public class Cash extends Payment { // Cash 클래스
     public Cash(int price) {
         super(price);
     }
-    
 }

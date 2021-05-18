@@ -5,6 +5,8 @@
  */
 package DPP_Cal;
 
+import DPP_Memeto.CareTaker;
+import DPP_Memeto.Information;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import javax.swing.JOptionPane;
@@ -19,6 +21,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
     /**
      * Creates new form PaymentJFrame
      */
+    
     public PaymentJFrame() {
         initComponents();
     }
@@ -31,6 +34,11 @@ public class PaymentJFrame extends javax.swing.JFrame {
         jLayeredPane_Payment.revalidate();
     }
     
+    // 지불 방법 구별을 위한 변수
+    static String cardtxt = "[카드]"; 
+    static String cashtxt = "[현금]"; 
+    
+    // 버튼 이벤트 및 display()에 필요한 변수 선언
     static String orderString = "";  // 주문내용
     static int priceNum = 0; // 판매 가격 
     int paymentNum_cash = 0; // 현금 지불 가격
@@ -42,14 +50,52 @@ public class PaymentJFrame extends javax.swing.JFrame {
     int count_1000won = 0;
     int count_500won = 0;
     int count_100won = 0;
+    int errorcount = 0; // 에러카운트
     
+    
+    // txt 경로 설정
     String fileName_payment = "calculration\\payment_Final.txt"; // txt 입출력에 필요
     String fileName_cashpay = "calculration\\order_history_cash.txt"; // txt 입출력에 필요
     String fileName_cardpay = "calculration\\order_history_card.txt"; // txt 입출력에 필요
     
-    // 테스트 
-    static int price = 6000; // 테스트 상품 가격
-    static String order = "주문내용 테스트 123";
+    // 테스트 상품 가격 및 주문 내용 입력 
+    static int price ; 
+    static String order ;
+    String temporary_order = "";
+    int temporary_price = 0;
+    
+    public void bringorder(String temporary_order ,int temporary_price ) {
+        this.temporary_order = temporary_order;
+        this.temporary_price = temporary_price;
+        
+        price = temporary_price;
+        order = temporary_order;
+        
+        Payment cash = new Cash("Cash");
+        Payment card = new Card("Card");
+        
+        order_cash_Label.setText(order);
+        price_cash_Label.setText(Integer.toString(price));
+        order_credit_card_Label.setText(order);
+        price_credit_card_Label.setText(Integer.toString(price));
+        
+        //전략 선언
+        cash.setPaymentStrategy(new CashStrategy()); // 현금 사용 전략
+        card.setPaymentStrategy(new CardStrategy()); // 카드 사용 전략
+        
+        cash.display(order,price);
+        card.display(order,price);
+        
+        cash.orderhistory(order, price);
+        card.orderhistory(order, price);
+    }
+    
+    
+    
+    // Memento
+    Information info; // Information 객체 생성
+    CareTaker caretaker; // CareTaker 객체 생성
+    
   
     /**
      * This method is called from within the constructor to initialize the form.
@@ -337,7 +383,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(title_credit_card)
                 .addGap(30, 30, 30)
-                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(order_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(order_credit_card_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(50, 50, 50)
@@ -454,11 +500,27 @@ public class PaymentJFrame extends javax.swing.JFrame {
     private void btn_cashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cashActionPerformed
         switchPanels(cash_Panel); // cash 버튼을 누르면 cash 패널로 전환 ( 기본적으로 cash 패널이 보여짐 )
         JOptionPane.showMessageDialog(null, "현금 결제 입니다.", "현금 결제", JOptionPane.INFORMATION_MESSAGE, null);
+        
+        if(errorcount >= 1) { // 에러 카운트가 증가했을 시 : cash button을 새로 눌러 결제를 재도전
+            JOptionPane.showMessageDialog(null, "비정상종료로 인한 상품내용 복구", "에러카운트 감지", JOptionPane.INFORMATION_MESSAGE);
+            info.RestroMemento(caretaker.pop()); 
+            order_cash_Label.setText(order);
+            price_cash_Label.setText(Integer.toString(price));
+            errorcount = 0; // 에러카운트 감소 1 -> 0
+        }
     }//GEN-LAST:event_btn_cashActionPerformed
 
     private void btn_credit_cardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_credit_cardActionPerformed
         switchPanels(credit_card_Panel); // credit_card 버튼을 누르면 credit_card 패널로 전환 
         JOptionPane.showMessageDialog(null, "카드 결제 입니다.", "카드 결제", JOptionPane.INFORMATION_MESSAGE, null);
+        
+        if(errorcount >= 1) { // 에러 카운트가 증가했을 시 : cash button을 새로 눌러 결제를 재도전
+            JOptionPane.showMessageDialog(null, "비정상종료로 인한 상품내용 복구", "에러카운트 감지", JOptionPane.INFORMATION_MESSAGE);
+            info.RestroMemento(caretaker.pop()); 
+            order_credit_card_Label.setText(order);
+            price_credit_card_Label.setText(Integer.toString(price));
+            errorcount = 0; // 에러카운트 감소 1 -> 0
+        }    
     }//GEN-LAST:event_btn_credit_cardActionPerformed
 
     private void btn_pay_credit_cardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pay_credit_cardActionPerformed
@@ -493,16 +555,25 @@ public class PaymentJFrame extends javax.swing.JFrame {
 
     private void btn_paycheck_cashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_paycheck_cashActionPerformed
         //  현금 결제확인 버튼 : 지불할 가격에 대해 지불금액을 최종 확인하는 버튼이다.
+        
+        //Memento
+        info = new Information(order , price); // 객체 생성
+        caretaker = new CareTaker(); // 객체 생성
+        caretaker.push(info.CreateMemento()); // 현재 Information의 상태 정보를 가지는 Memento를 생성하여 CareTaker에 추가 (push)
+        
+        // 확인 다이얼로그
         int result = JOptionPane.showConfirmDialog(this,"지불금액을 확정하겠습니까?\n 지불금액:"+paymentNum_cash, "최종확인", JOptionPane.YES_NO_OPTION);
-        switch (result) {
+        
+        try {
+            switch (result) {
             // 사용자가 "예","아니오"의 선택 없이 다이얼로그 창을 닫은 경우
-            case JOptionPane.CANCEL_OPTION:
+            case JOptionPane.CANCEL_OPTION:     
             break;
             case JOptionPane.YES_NO_OPTION:
             // 사용자가 "예"를 선택한 경우
             String payment_Final_txt = ""+paymentNum_cash;
             String order_history_txt = "지불 가격 :" + paymentNum_cash;
-            String Cash_count_txt = "/ [오만원:"+count_50000won+"회], "+"[만원"+count_10000won+"회], "+"[오천원"+count_5000won+"회], "+"[천원"+count_1000won+"회], "+"[오백원"+count_500won+"회], "+"[백원"+count_100won+"회]";
+            String Cash_count_txt = "/ [오만원:"+count_50000won+"회], "+"[만원"+count_10000won+"회], "+"[오천원"+count_5000won+"회], "+"[천원"+count_1000won+"회], "+"[오백원"+count_500won+"회], "+"[백원"+count_100won+"회]\r\n";
             try{
                 BufferedWriter fw = new BufferedWriter(new FileWriter(fileName_payment,false));  // payment_Final.txt
                 fw.write(payment_Final_txt);
@@ -516,6 +587,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
                 fw2.close();
             } catch (Exception e) {
                 e.getStackTrace();
+                System.exit(1); // 비정상 종료
             }
             count_50000won = 0;
             count_10000won = 0;
@@ -524,8 +596,10 @@ public class PaymentJFrame extends javax.swing.JFrame {
             count_500won = 0;
             count_100won = 0;
             break;
-            default:
-            // 사용자가 "아니오"를 선택한 경우
+            
+            case JOptionPane.NO_OPTION:
+            // 사용자가 "아니오" 를 선택한 경우
+                // 사용자가 "아니오"를 선택한 경우
             paymentNum_cash = 0;
             payment_cash_Field.setText(Integer.toString(paymentNum_cash));
 
@@ -536,12 +610,29 @@ public class PaymentJFrame extends javax.swing.JFrame {
                 fw2.flush();
                 fw2.close();
             } catch (Exception e) {
-                e.getStackTrace();
+                e.getStackTrace(); 
+                System.exit(1); // 비정상 종료
             }
-            JOptionPane.showMessageDialog(this, "결제취소. 창을 닫습니다.", "결제취소", JOptionPane.ERROR_MESSAGE);
-            dispose(); // 결제창 닫음.
+            JOptionPane.showMessageDialog(this, "결제취소. ", "결제취소", JOptionPane.ERROR_MESSAGE);
             break;
+            
+            default: 
+                // 비정상 종료 : 확인도 취소도 아닌 행위
+                JOptionPane.showMessageDialog(null,"비정상종료감지 : 결제창을 닫습니다. ", "비정상종료", JOptionPane.ERROR_MESSAGE);
+                priceNum = 0;
+                orderString = "";
+                paymentNum_cash = 0;
+                payment_cash_Field.setText(Integer.toString(0));
+                order_cash_Label.setText(orderString);
+                price_cash_Label.setText(Integer.toString(priceNum));
+                errorcount++; // 에러 카운트 증가 0 ->  1
+                break;
+            }
+        } catch (Exception e) {
+            e.getStackTrace();
+            System.exit(1);// 비정상 종료
         }
+       
     }//GEN-LAST:event_btn_paycheck_cashActionPerformed
 
     private void btn_pay_cashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pay_cashActionPerformed
@@ -609,7 +700,15 @@ public class PaymentJFrame extends javax.swing.JFrame {
 
     private void btn_paycheck_credit_cardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_paycheck_credit_cardActionPerformed
         // 카드 : 지불할 가격에 대해 지불금액을 최종 확인하는 버튼이다.
+        
+        //Memento
+        info = new Information(order , price); // 객체 생성
+        caretaker = new CareTaker(); // 객체 생성
+        caretaker.push(info.CreateMemento()); // 현재 Information의 상태 정보를 가지는 Memento를 생성하여 CareTaker에 추가 (push)
+        
+        //확인 다이얼로그
         int result = JOptionPane.showConfirmDialog(this,"지불금액을 확정하겠습니까?\n 지불금액:"+paymentNum_card, "최종확인", JOptionPane.YES_NO_OPTION);
+        
         switch (result) {
             // 사용자가 "예","아니오"의 선택 없이 다이얼로그 창을 닫은 경우
             case JOptionPane.CANCEL_OPTION:
@@ -619,7 +718,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
             String inputtext = JOptionPane.showInputDialog(null, "서명 및 싸인을 해주세요.", "서명 및 싸인", JOptionPane.INFORMATION_MESSAGE);
             String payment_Final_txt = ""+paymentNum_card;
              String sign = inputtext;
-            String order_history_txt = "지불 가격 :" + paymentNum_card + "[카드결제] " + "본인확인 : " + sign ;
+            String order_history_txt = "지불 가격 :" + paymentNum_card + "[카드결제] " + "본인확인 : " + sign +"\r\n" ;
            
             try{
                 BufferedWriter fw = new BufferedWriter(new FileWriter(fileName_payment,false));  // payment_Final.txt
@@ -634,10 +733,11 @@ public class PaymentJFrame extends javax.swing.JFrame {
                 e.getStackTrace();
             }
             break;
-            default:
+            
+            case JOptionPane.NO_OPTION:
             // 사용자가 "아니오"를 선택한 경우
-            paymentNum_cash = 0;
-            payment_cash_Field.setText(Integer.toString(paymentNum_cash));
+            paymentNum_card = 0;
+            payment_credit_card_Field.setText(Integer.toString(paymentNum_card));
 
             String no_payment_txt = "결제 취소";
             try{
@@ -648,9 +748,21 @@ public class PaymentJFrame extends javax.swing.JFrame {
             } catch (Exception e) {
                 e.getStackTrace();
             }
-            JOptionPane.showMessageDialog(this, "결제취소. 창을 닫습니다.", "결제취소", JOptionPane.ERROR_MESSAGE);
-            dispose(); // 결제창 닫음.
+            JOptionPane.showMessageDialog(this, "결제취소.", "결제취소", JOptionPane.ERROR_MESSAGE);
+            
             break;
+                
+            default:
+                // 비정상 종료 : 확인도 취소도 아닌 행위
+                JOptionPane.showMessageDialog(null,"비정상종료감지 : 결제창을 닫습니다. ", "비정상종료", JOptionPane.ERROR_MESSAGE);
+                priceNum = 0;
+                orderString = "";
+                paymentNum_card = 0;
+                order_credit_card_Label.setText(orderString);
+                payment_credit_card_Field.setText(Integer.toString(0));
+                price_credit_card_Label.setText(Integer.toString(priceNum));
+                errorcount++; // 에러 카운트 증가 0 ->  1
+                break;
         }
     }//GEN-LAST:event_btn_paycheck_credit_cardActionPerformed
     
@@ -691,17 +803,6 @@ public class PaymentJFrame extends javax.swing.JFrame {
             }
         });
         
-        Payment cash = new Cash("Cash");
-        Payment card = new Card("Card");
-        
-        cash.setPaymentStrategy(new CashStrategy()); // 현금 사용 전략
-        card.setPaymentStrategy(new CardStrategy()); // 카드 사용 전략
-        
-        cash.display(order,price);
-        card.display(order,price);
-        
-        cash.orderhistory(order, price);
-        card.orderhistory(order, price);
         
     }
 
@@ -716,7 +817,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
     private javax.swing.JButton btn_cash;
     private javax.swing.JButton btn_credit_card;
     private javax.swing.JButton btn_exit;
-    private javax.swing.JButton btn_pay_cash;
+    public static javax.swing.JButton btn_pay_cash;
     private javax.swing.JButton btn_pay_credit_card;
     private javax.swing.JButton btn_paycheck_cash;
     private javax.swing.JButton btn_paycheck_credit_card;

@@ -1,5 +1,6 @@
 package DPP_Order;
 
+import DPP_Cal.PaymentJFrame;
 import DPP_Login.LoginLog;
 import javax.swing.JOptionPane;
 import java.io.*;
@@ -368,6 +369,11 @@ public class Order extends javax.swing.JFrame {
                 orderMouseClicked(evt);
             }
         });
+        order.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                orderActionPerformed(evt);
+            }
+        });
         jPanel5.add(order, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 30, 110, 50));
 
         getContentPane().add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 50, 690, 110));
@@ -626,10 +632,20 @@ public class Order extends javax.swing.JFrame {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            JOptionPane.showInternalMessageDialog(null, "주문이 접수되었습니다.");
+            
+             // (DPP_Cal) 결제창 띄움
+            PaymentJFrame f = new PaymentJFrame(); 
+            f.setVisible(true);
+            f.setLocationRelativeTo(null);
+            f.setResizable(false); // 사이즈 고정 
+            f.bringorder(orderText, TotalPrice);
+            
+            
             
             resetMenu();
             
-            JOptionPane.showInternalMessageDialog(null, "주문이 접수되었습니다.");
+            
         }
     }
     
@@ -798,6 +814,10 @@ public class Order extends javax.swing.JFrame {
     private void foodOKMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_foodOKMouseClicked
         Food_Deco_OK ();     // 음식 선택 완료 클릭  (데코 패턴 사용)
     }//GEN-LAST:event_foodOKMouseClicked
+
+    private void orderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_orderActionPerformed
 
     /**
      * @param args the command line arguments

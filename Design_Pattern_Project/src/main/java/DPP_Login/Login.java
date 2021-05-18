@@ -2,6 +2,7 @@ package DPP_Login;
 
 import DPP_Order.Order;
 import DPP_Seat.Seat_Single;
+import DPP_Time.Timer;
 import javax.swing.JOptionPane;
 
 public class Login extends javax.swing.JFrame {
@@ -431,6 +432,8 @@ public class Login extends javax.swing.JFrame {
             Order next = new Order();
             next.setVisible(true);
             next.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+            Timer next2 = new Timer();
+            next2.setVisible(true);
             dispose();
         }else{
             LoginStatusField.setText("WRONG ID or PASSWORD");
@@ -475,7 +478,6 @@ public class Login extends javax.swing.JFrame {
             }
             if(ok==true){
                 JOptionPane.showMessageDialog(null,"회원가입이 되었습니다.");
-                System.out.println(name+" "+email+" "+id+" "+pw+" "+age);
                 nameState.setText("");
                 idState.setText("");
                 pwState.setText("");
@@ -484,7 +486,6 @@ public class Login extends javax.swing.JFrame {
                         .setEmail(email)
                         .setAge(age)
                         .build();
-                System.out.println(result[IDS].UserPrint());
                 IDS++;
                 SignUp.setVisible(false);
             }

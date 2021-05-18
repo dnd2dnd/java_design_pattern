@@ -4,6 +4,7 @@ import DPP_Time.*;
 
 import java.util.Calendar;
 import javax.swing.JOptionPane;
+import DPP_Cal.PaymentJFrame;
 
 public class Timer extends javax.swing.JFrame {
         
@@ -543,48 +544,112 @@ public class Timer extends javax.swing.JFrame {
     private void c1hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("1시간", 1000);
+        
         timeData.setHour(1);
     }//GEN-LAST:event_c1hourActionPerformed
 
     private void c2hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c2hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("2시간", 2000);
+        
         timeData.setHour(2);
     }//GEN-LAST:event_c2hourActionPerformed
 
     private void c4hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c4hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("4시간", 4000);
+        
         timeData.setHour(4);
     }//GEN-LAST:event_c4hourActionPerformed
 
     private void c30hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c30hourActionPerformed
         NOTICE.setVisible(true);
-        NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴        
+        NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴   
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("30시간", 30000);
+        
         timeData.setHour(30);
     }//GEN-LAST:event_c30hourActionPerformed
 
     private void c5hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c5hourActionPerformed
         NOTICE.setVisible(true);
-        NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴        
+        NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴      
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("5시간", 5000);
+        
         timeData.setHour(5);
     }//GEN-LAST:event_c5hourActionPerformed
 
     private void c10hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c10hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("10시간", 10000);
+        
         timeData.setHour(10);
     }//GEN-LAST:event_c10hourActionPerformed
 
     private void c3hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c3hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("3시간", 3000);
+        
         timeData.setHour(3);
     }//GEN-LAST:event_c3hourActionPerformed
 
     private void c20hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c20hourActionPerformed
         NOTICE.setVisible(true);
         NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+        
+        // (DPP_Cal) 결제창 띄움
+        PaymentJFrame f = new PaymentJFrame(); 
+        f.setVisible(true);
+        f.setLocationRelativeTo(null);
+        f.setResizable(false); // 사이즈 고정 
+        f.bringorder("20시간", 20000);
+        
         timeData.setHour(20);
     }//GEN-LAST:event_c20hourActionPerformed
 

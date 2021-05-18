@@ -11,5 +11,4 @@ package DPP_Cal;
  */
 public interface PaymentStrategy { // paymentStrategy 인터페이스
     public void orderhistory(String orderName, int price);
-   
 }
