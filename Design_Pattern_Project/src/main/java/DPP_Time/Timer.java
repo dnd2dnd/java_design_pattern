@@ -5,6 +5,7 @@ import DPP_Time.*;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 import DPP_Cal.PaymentJFrame;
+import DPP_Order.Order;
 
 public class Timer extends javax.swing.JFrame {
         
@@ -79,8 +80,6 @@ public class Timer extends javax.swing.JFrame {
 
 
                 Thread.sleep(10);//0.1초
-                first.setText(dday);//first의 내용을 one(string)으로 설정한다
-                second.setText(currentTime.display());//second의 내용을 two(string)으로 설정한다.
                 timeState.setText(timeNotice.display());
                 repaint();
             } catch(Exception e) {
@@ -95,20 +94,6 @@ public class Timer extends javax.swing.JFrame {
     private void initComponents() {
 
         timeplus = new javax.swing.JFrame();
-        jPanel2 = new javax.swing.JPanel();
-        jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jPanel8 = new javax.swing.JPanel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        CASH = new javax.swing.JFrame();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel9 = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
-        jPanel10 = new javax.swing.JPanel();
-        jButton5 = new javax.swing.JButton();
-        jLabel11 = new javax.swing.JLabel();
-        CARD = new javax.swing.JFrame();
         jPanel4 = new javax.swing.JPanel();
         c1hour = new javax.swing.JButton();
         c2hour = new javax.swing.JButton();
@@ -125,14 +110,10 @@ public class Timer extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
-        test = new javax.swing.JFrame();
-        first = new javax.swing.JLabel();
-        second = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         timeCharge = new javax.swing.JButton();
-        timeExeit = new javax.swing.JButton();
         jPanel7 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -140,119 +121,10 @@ public class Timer extends javax.swing.JFrame {
         useTime = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         timeState = new javax.swing.JLabel();
+        timeExeit = new javax.swing.JButton();
+        OrderFood = new javax.swing.JButton();
 
-        timeplus.setSize(new java.awt.Dimension(0, 0));
-
-        jPanel2.setBackground(new java.awt.Color(106, 116, 145));
-        jPanel2.setMaximumSize(new java.awt.Dimension(2147483647, 2147483647));
-        jPanel2.setMinimumSize(new java.awt.Dimension(300, 160));
-        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton3.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        jButton3.setText("현금 결제");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 110, 120, 50));
-
-        jButton4.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        jButton4.setText("카드 결제");
-        jButton4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton4ActionPerformed(evt);
-            }
-        });
-        jPanel2.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 120, 50));
-
-        jPanel8.setBackground(new java.awt.Color(32, 47, 90));
-
-        jLabel9.setFont(new java.awt.Font("맑은 고딕", 1, 24)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel9.setText("결제");
-
-        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
-        jPanel8.setLayout(jPanel8Layout);
-        jPanel8Layout.setHorizontalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addGap(125, 125, 125)
-                .addComponent(jLabel9)
-                .addContainerGap(127, Short.MAX_VALUE))
-        );
-        jPanel8Layout.setVerticalGroup(
-            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel8Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel9)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        jPanel2.add(jPanel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 300, 50));
-
-        jLabel10.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel10.setText("결제 방법을 선택해주세요.");
-        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, -1, -1));
-
-        javax.swing.GroupLayout timeplusLayout = new javax.swing.GroupLayout(timeplus.getContentPane());
-        timeplus.getContentPane().setLayout(timeplusLayout);
-        timeplusLayout.setHorizontalGroup(
-            timeplusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-        );
-        timeplusLayout.setVerticalGroup(
-            timeplusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 177, Short.MAX_VALUE)
-        );
-
-        jPanel3.setMinimumSize(new java.awt.Dimension(150, 143));
-        jPanel3.setPreferredSize(new java.awt.Dimension(220, 160));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jPanel9.setBackground(new java.awt.Color(32, 47, 90));
-        jPanel9.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel4.setFont(new java.awt.Font("맑은 고딕", 1, 20)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel4.setText("현금 결제");
-        jPanel9.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 0, -1, 40));
-
-        jPanel3.add(jPanel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 40));
-
-        jPanel10.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel10.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jButton5.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        jButton5.setText("확 인");
-        jButton5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
-            }
-        });
-        jPanel10.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 90, -1));
-
-        jLabel11.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        jLabel11.setText("카운터에 문의해주세요!");
-        jPanel10.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, -1, -1));
-
-        jPanel3.add(jPanel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, 160));
-
-        javax.swing.GroupLayout CASHLayout = new javax.swing.GroupLayout(CASH.getContentPane());
-        CASH.getContentPane().setLayout(CASHLayout);
-        CASHLayout.setHorizontalGroup(
-            CASHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CASHLayout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
-        );
-        CASHLayout.setVerticalGroup(
-            CASHLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-        );
-
-        CARD.setMinimumSize(new java.awt.Dimension(400, 300));
+        timeplus.setMinimumSize(new java.awt.Dimension(400, 300));
 
         jPanel4.setBackground(new java.awt.Color(106, 116, 145));
         jPanel4.setMinimumSize(new java.awt.Dimension(400, 288));
@@ -351,14 +223,14 @@ public class Timer extends javax.swing.JFrame {
 
         jPanel4.add(jPanel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 400, 50));
 
-        javax.swing.GroupLayout CARDLayout = new javax.swing.GroupLayout(CARD.getContentPane());
-        CARD.getContentPane().setLayout(CARDLayout);
-        CARDLayout.setHorizontalGroup(
-            CARDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout timeplusLayout = new javax.swing.GroupLayout(timeplus.getContentPane());
+        timeplus.getContentPane().setLayout(timeplusLayout);
+        timeplusLayout.setHorizontalGroup(
+            timeplusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
-        CARDLayout.setVerticalGroup(
-            CARDLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        timeplusLayout.setVerticalGroup(
+            timeplusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, 290, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
@@ -424,31 +296,6 @@ public class Timer extends javax.swing.JFrame {
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        first.setText("날짜");
-
-        second.setText("시간");
-
-        javax.swing.GroupLayout testLayout = new javax.swing.GroupLayout(test.getContentPane());
-        test.getContentPane().setLayout(testLayout);
-        testLayout.setHorizontalGroup(
-            testLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(testLayout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addGroup(testLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(second, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(first, javax.swing.GroupLayout.PREFERRED_SIZE, 164, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(166, Short.MAX_VALUE))
-        );
-        testLayout.setVerticalGroup(
-            testLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(testLayout.createSequentialGroup()
-                .addGap(70, 70, 70)
-                .addComponent(first, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(29, 29, 29)
-                .addComponent(second)
-                .addContainerGap(163, Short.MAX_VALUE))
-        );
-
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(32, 47, 90));
@@ -469,21 +316,7 @@ public class Timer extends javax.swing.JFrame {
                 timeChargeMouseClicked(evt);
             }
         });
-        timeCharge.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                timeChargeActionPerformed(evt);
-            }
-        });
-        jPanel6.add(timeCharge, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 160, 50));
-
-        timeExeit.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
-        timeExeit.setText("종 료");
-        timeExeit.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                timeExeitMouseClicked(evt);
-            }
-        });
-        jPanel6.add(timeExeit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 210, 160, 50));
+        jPanel6.add(timeCharge, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 210, 140, 50));
 
         jPanel7.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -512,6 +345,24 @@ public class Timer extends javax.swing.JFrame {
 
         jPanel6.add(jPanel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 440, 150));
 
+        timeExeit.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
+        timeExeit.setText("종 료");
+        timeExeit.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                timeExeitMouseClicked(evt);
+            }
+        });
+        jPanel6.add(timeExeit, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 210, 140, 50));
+
+        OrderFood.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
+        OrderFood.setText("음식 주문");
+        OrderFood.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                OrderFoodMouseClicked(evt);
+            }
+        });
+        jPanel6.add(OrderFood, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 210, 140, 50));
+
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 500, 280));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -534,21 +385,8 @@ public class Timer extends javax.swing.JFrame {
         timeplus.setVisible(true);
     }//GEN-LAST:event_timeChargeMouseClicked
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        CASH.setSize(250, 200);
-        CASH.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        CASH.setVisible(true); 
-    }//GEN-LAST:event_jButton3ActionPerformed
-
-    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        CARD.setSize(400, 300);
-        CARD.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        CARD.setVisible(true);
-        timeplus.dispose();
-    }//GEN-LAST:event_jButton4ActionPerformed
-
     private void c1hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1hourActionPerformed
-         CARD.dispose();
+         timeplus.dispose();
        
         // (DPP_Cal) 결제창 띄움
         PaymentJFrame f = new PaymentJFrame(); 
@@ -667,8 +505,7 @@ public class Timer extends javax.swing.JFrame {
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         NOTICE.setVisible(false);
-        CARD.setVisible(false); 
-        CASH.setVisible(false); 
+        timeplus.setVisible(false); 
         timeplus.setVisible(false);
         //Test test = new Test();
         //test.setVisible(true);
@@ -678,13 +515,11 @@ public class Timer extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_timeExeitMouseClicked
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        CASH.dispose();
-    }//GEN-LAST:event_jButton5ActionPerformed
-
-    private void timeChargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeChargeActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_timeChargeActionPerformed
+    private void OrderFoodMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_OrderFoodMouseClicked
+        Order next = new Order();
+        next.setVisible(true);
+        next.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+    }//GEN-LAST:event_OrderFoodMouseClicked
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -722,9 +557,8 @@ public class Timer extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JFrame CARD;
-    private javax.swing.JFrame CASH;
     private javax.swing.JFrame NOTICE;
+    private javax.swing.JButton OrderFood;
     private javax.swing.JButton c10hour;
     private javax.swing.JButton c1hour;
     private javax.swing.JButton c20hour;
@@ -733,36 +567,21 @@ public class Timer extends javax.swing.JFrame {
     private javax.swing.JButton c3hour;
     private javax.swing.JButton c4hour;
     private javax.swing.JButton c5hour;
-    private javax.swing.JLabel first;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton7;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel10;
     private javax.swing.JPanel jPanel11;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
-    private javax.swing.JPanel jPanel8;
-    private javax.swing.JPanel jPanel9;
     private javax.swing.JLabel remainTime;
-    private javax.swing.JLabel second;
-    private javax.swing.JFrame test;
     private javax.swing.JButton timeCharge;
     private javax.swing.JButton timeExeit;
     private javax.swing.JLabel timeState;

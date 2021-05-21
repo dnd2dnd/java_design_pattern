@@ -69,6 +69,7 @@ public class Order extends javax.swing.JFrame {
         Set_1 = new javax.swing.JButton();
         Set_2 = new javax.swing.JButton();
         jPanel4 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         UserNameField = new javax.swing.JTextField();
         jPanel5 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -139,7 +140,6 @@ public class Order extends javax.swing.JFrame {
             .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(0, 15, 80));
@@ -332,12 +332,22 @@ public class Order extends javax.swing.JFrame {
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        jLabel2.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
+        jLabel2.setText("나가기");
+        jLabel2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 0, -1, 50));
+
         UserNameField.setEditable(false);
         UserNameField.setBackground(new java.awt.Color(255, 255, 255));
         UserNameField.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
         UserNameField.setBorder(null);
         UserNameField.setFocusable(false);
-        jPanel4.add(UserNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 10, 90, 30));
+        jPanel4.add(UserNameField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 10, 90, 30));
 
         getContentPane().add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 690, 50));
 
@@ -819,6 +829,10 @@ public class Order extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_orderActionPerformed
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+         dispose();
+    }//GEN-LAST:event_jLabel2MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -880,6 +894,7 @@ public class Order extends javax.swing.JFrame {
     private javax.swing.JButton friedRice;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;

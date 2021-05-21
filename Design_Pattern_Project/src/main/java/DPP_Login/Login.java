@@ -31,6 +31,7 @@ public class Login extends javax.swing.JFrame {
         asdfdsfa = new javax.swing.JPanel();
         PwField = new javax.swing.JTextField();
         asdfd = new javax.swing.JPanel();
+        emailField = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         signButton = new javax.swing.JButton();
         EmailField = new javax.swing.JTextField();
@@ -160,15 +161,25 @@ public class Login extends javax.swing.JFrame {
 
         asdfd.setBackground(new java.awt.Color(106, 116, 145));
 
+        emailField.setBackground(new java.awt.Color(106, 116, 145));
+        emailField.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
+        emailField.setForeground(new java.awt.Color(204, 204, 204));
+        emailField.setBorder(null);
+
         javax.swing.GroupLayout asdfdLayout = new javax.swing.GroupLayout(asdfd);
         asdfd.setLayout(asdfdLayout);
         asdfdLayout.setHorizontalGroup(
             asdfdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 170, Short.MAX_VALUE)
+            .addGroup(asdfdLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 158, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         asdfdLayout.setVerticalGroup(
             asdfdLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 30, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, asdfdLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(emailField, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel7.add(asdfd, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 290, 170, 30));
@@ -415,29 +426,34 @@ public class Login extends javax.swing.JFrame {
         String name="";
         boolean login=false;
         if(id.isEmpty() || pw.isEmpty()){
-            //LoginStatusField.setText("WRONG ID or PASSWORD");
             LoginStatusField.setText("빈칸을 모두 채워주세요.");
-            //JOptionPane.showMessageDialog(null,"빈칸이 있습니다.");
         }else{
-            for(int i=0; i<IDS; i++){
-                if(result[i].getId().equals(id)){
-                    login=true;
-                    name=result[i].getName();
+            if (id.equals("admin") && pw.equals("admin")) {
+                login = true;
+                name = "admin";
+            }
+            else {
+                for(int i=0; i<IDS; i++){
+                    if(result[i].getId().equals(id)){
+                        if(result[i].getPw().equals(pw)){
+                            login = true;
+                            name = result[i].getName();
+                        }
+                    }
                 }
-            }            
+            }
         }
         if(login){
             loginlog.setName(name);
-            JOptionPane.showMessageDialog(null, name+"님 반갑습니다.\n고객님의 자리는 "+seat.getNum()+1+" 번 입니다.");
-            Order next = new Order();
+            JOptionPane.showMessageDialog(null, name+"님 반갑습니다.\n고객님의 자리는 "+seat.getNum() + " 번 입니다.");
+
+            Timer next = new Timer();
             next.setVisible(true);
             next.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-            Timer next2 = new Timer();
-            next2.setVisible(true);
+            
             dispose();
         }else{
             LoginStatusField.setText("WRONG ID or PASSWORD");
-            //JOptionPane.showMessageDialog(null,"로그인 실패.");
         }
 
     }//GEN-LAST:event_LoginButtonActionPerformed
@@ -466,8 +482,7 @@ public class Login extends javax.swing.JFrame {
             } else if(!pw.isEmpty()){
                 pwState.setText("");
             }
-            //JOptionPane.showMessageDialog(null,"이름, ID, PW를 모두 입력해주세요.");
-            
+                        
         }else{
             for(int i=0; i<IDS; i++){
                 if(result[i].getId().equals(id)){
@@ -478,6 +493,11 @@ public class Login extends javax.swing.JFrame {
             }
             if(ok==true){
                 JOptionPane.showMessageDialog(null,"회원가입이 되었습니다.");
+                NameField.setText("");
+                IdField.setText("");
+                PwField.setText("");
+                AgeField.setText("");
+                emailField.setText("");
                 nameState.setText("");
                 idState.setText("");
                 pwState.setText("");
@@ -545,6 +565,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel asdfd1;
     private javax.swing.JPanel asdfdf;
     private javax.swing.JPanel asdfdsfa;
+    private javax.swing.JTextField emailField;
     private javax.swing.JLabel idState;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;

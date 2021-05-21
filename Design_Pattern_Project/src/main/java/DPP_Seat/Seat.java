@@ -6,6 +6,7 @@ public class Seat extends javax.swing.JFrame {
 
     public Seat() {
         initComponents();
+        setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
     }
 
     @SuppressWarnings("unchecked")
