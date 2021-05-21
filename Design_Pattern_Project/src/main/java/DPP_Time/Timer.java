@@ -469,6 +469,11 @@ public class Timer extends javax.swing.JFrame {
                 timeChargeMouseClicked(evt);
             }
         });
+        timeCharge.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                timeChargeActionPerformed(evt);
+            }
+        });
         jPanel6.add(timeCharge, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 210, 160, 50));
 
         timeExeit.setFont(new java.awt.Font("맑은 고딕", 1, 18)); // NOI18N
@@ -538,21 +543,28 @@ public class Timer extends javax.swing.JFrame {
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
         CARD.setSize(400, 300);
         CARD.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        CARD.setVisible(true); 
+        CARD.setVisible(true);
+        timeplus.dispose();
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void c1hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c1hourActionPerformed
-        NOTICE.setVisible(true);
-        NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
-        
+         CARD.dispose();
+       
         // (DPP_Cal) 결제창 띄움
         PaymentJFrame f = new PaymentJFrame(); 
         f.setVisible(true);
         f.setLocationRelativeTo(null);
         f.setResizable(false); // 사이즈 고정 
         f.bringorder("1시간", 1000);
+        f.checkingorders(true); // 시간충전임을 알림
         
-        timeData.setHour(1);
+        // 문제..
+        if (f.get_check(rootPaneCheckingEnabled) == false) {
+            NOTICE.setVisible(true);
+            NOTICE.setLocationRelativeTo(null);// 화면 가운데서 창이 나옴
+            timeData.setHour(1);
+        }
+        
     }//GEN-LAST:event_c1hourActionPerformed
 
     private void c2hourActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_c2hourActionPerformed
@@ -669,6 +681,10 @@ public class Timer extends javax.swing.JFrame {
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         CASH.dispose();
     }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void timeChargeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_timeChargeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_timeChargeActionPerformed
 
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */

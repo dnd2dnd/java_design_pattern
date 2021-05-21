@@ -24,6 +24,12 @@ public class PaymentJFrame extends javax.swing.JFrame {
     
     public PaymentJFrame() {
         initComponents();
+        
+        cash_Panel.setVisible(false);
+        credit_card_Panel.setVisible(false);
+        
+        cash_Panel.setEnabled(false);
+        credit_card_Panel.setEnabled(false);
     }
     
      // 패널 변경에 있어 우선 설정해야하는 것들
@@ -51,6 +57,8 @@ public class PaymentJFrame extends javax.swing.JFrame {
     int count_500won = 0;
     int count_100won = 0;
     int errorcount = 0; // 에러카운트
+    boolean cash_procedure = false; // 현금 결제 순서
+    boolean card_procedure = false; // 카드 결제 순서
     
     
     // txt 경로 설정
@@ -63,6 +71,16 @@ public class PaymentJFrame extends javax.swing.JFrame {
     static String order ;
     String temporary_order = "";
     int temporary_price = 0;
+    boolean timecheck = false; // 시간충전주문 체크
+    
+   public void checkingorders(boolean timecheck) {
+       this.timecheck = timecheck;
+   }
+   
+   public boolean get_check(boolean timecheck) {
+       return timecheck;
+   }
+   
     
     public void bringorder(String temporary_order ,int temporary_price ) {
         this.temporary_order = temporary_order;
@@ -142,7 +160,8 @@ public class PaymentJFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        cash_Panel.setBackground(new java.awt.Color(255, 255, 255));
+        contentPane.setBackground(new java.awt.Color(32, 47, 90));
+
         cash_Panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         cash_Panel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -221,6 +240,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
         price_cash_Label.setText(Integer.toString(priceNum));
 
         payment_cash_Field.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        payment_cash_Field.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         payment_cash_Field.setEnabled(false);
 
         btn_paycheck_cash.setText("결제확인(1)");
@@ -237,78 +257,89 @@ public class PaymentJFrame extends javax.swing.JFrame {
             .addGroup(cash_PanelLayout.createSequentialGroup()
                 .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cash_PanelLayout.createSequentialGroup()
-                        .addGap(79, 79, 79)
+                        .addContainerGap()
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(price_cash)
+                                .addComponent(order_cash))
+                            .addComponent(payment_cash))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(payment_cash)
-                            .addComponent(price_cash)
-                            .addComponent(order_cash))
-                        .addGap(18, 18, 18)
-                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(order_cash_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(price_cash_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(payment_cash_Field, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)))
+                            .addComponent(payment_cash_Field)
+                            .addComponent(order_cash_Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                     .addGroup(cash_PanelLayout.createSequentialGroup()
-                        .addGap(201, 201, 201)
+                        .addGap(209, 209, 209)
                         .addComponent(btn_paycheck_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(52, 52, 52)
-                        .addComponent(btn_pay_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(176, 176, 176)
+                        .addComponent(btn_pay_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 55, Short.MAX_VALUE)))
+                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(cash_PanelLayout.createSequentialGroup()
-                        .addGap(300, 300, 300)
-                        .addComponent(title_cash)))
-                .addGap(58, 58, 58)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btn_5000, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_500, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btn_50000, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(18, 18, 18)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btn_10000, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_1000, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_100, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(22, Short.MAX_VALUE))
+                        .addGap(13, 13, 13)
+                        .addComponent(btn_500, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btn_100, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 1, Short.MAX_VALUE))
+                    .addGroup(cash_PanelLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cash_PanelLayout.createSequentialGroup()
+                                .addComponent(btn_50000, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_10000, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, cash_PanelLayout.createSequentialGroup()
+                                .addComponent(btn_5000, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btn_1000, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addContainerGap())
+            .addGroup(cash_PanelLayout.createSequentialGroup()
+                .addGap(375, 375, 375)
+                .addComponent(title_cash)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         cash_PanelLayout.setVerticalGroup(
             cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(cash_PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(title_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(order_cash)
-                    .addComponent(order_cash_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(price_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(price_cash_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(payment_cash)
-                    .addComponent(payment_cash_Field, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(55, 55, 55)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_pay_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_paycheck_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(56, Short.MAX_VALUE))
-            .addGroup(cash_PanelLayout.createSequentialGroup()
                 .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(cash_PanelLayout.createSequentialGroup()
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(cash_PanelLayout.createSequentialGroup()
+                                .addGap(83, 83, 83)
+                                .addComponent(order_cash))
+                            .addGroup(cash_PanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(title_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(26, 26, 26)
+                                .addComponent(order_cash_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(40, 40, 40)
-                        .addComponent(btn_50000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(price_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(price_cash_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(payment_cash)
+                            .addComponent(payment_cash_Field, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(43, 43, 43)
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_paycheck_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_pay_cash, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(cash_PanelLayout.createSequentialGroup()
                         .addGap(40, 40, 40)
-                        .addComponent(btn_10000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_1000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_5000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_100, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_500, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_50000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_10000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_5000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_1000, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(cash_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_100, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_500, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
 
-        credit_card_Panel.setBackground(new java.awt.Color(255, 255, 255));
         credit_card_Panel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         title_credit_card.setFont(new java.awt.Font("굴림", 0, 18)); // NOI18N
@@ -355,52 +386,66 @@ public class PaymentJFrame extends javax.swing.JFrame {
         credit_card_PanelLayout.setHorizontalGroup(
             credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(credit_card_PanelLayout.createSequentialGroup()
-                .addGap(275, 275, 275)
+                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(credit_card_PanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(order_credit_card)
+                            .addComponent(price_credit_card)
+                            .addComponent(payment_credit_card))
+                        .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(credit_card_PanelLayout.createSequentialGroup()
+                                .addGap(5, 5, 5)
+                                .addComponent(payment_credit_card_Field))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, credit_card_PanelLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(order_credit_card_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(price_credit_card_Label, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(23, 23, 23)
+                        .addComponent(btn_card_reader))
+                    .addGroup(credit_card_PanelLayout.createSequentialGroup()
+                        .addGap(214, 214, 214)
+                        .addComponent(btn_paycheck_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(188, 188, 188)
+                        .addComponent(btn_pay_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 234, Short.MAX_VALUE)))
+                .addContainerGap())
+            .addGroup(credit_card_PanelLayout.createSequentialGroup()
+                .addGap(349, 349, 349)
                 .addComponent(title_credit_card)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(credit_card_PanelLayout.createSequentialGroup()
-                .addGap(104, 104, 104)
-                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(price_credit_card)
-                    .addComponent(payment_credit_card)
-                    .addComponent(order_credit_card))
-                .addGap(22, 22, 22)
-                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addGroup(credit_card_PanelLayout.createSequentialGroup()
-                        .addComponent(btn_paycheck_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 100, Short.MAX_VALUE)
-                        .addComponent(btn_pay_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(price_credit_card_Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(order_credit_card_Label, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(payment_credit_card_Field))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 56, Short.MAX_VALUE)
-                .addComponent(btn_card_reader)
-                .addGap(46, 46, 46))
         );
         credit_card_PanelLayout.setVerticalGroup(
             credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(credit_card_PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(title_credit_card)
-                .addGap(30, 30, 30)
-                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(order_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(order_credit_card_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(50, 50, 50)
                 .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(credit_card_PanelLayout.createSequentialGroup()
                         .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(price_credit_card, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(price_credit_card_Label, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(44, 44, 44)
+                            .addGroup(credit_card_PanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(title_credit_card)
+                                .addGap(46, 46, 46)
+                                .addComponent(order_credit_card_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(30, 30, 30))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, credit_card_PanelLayout.createSequentialGroup()
+                                .addGap(89, 89, 89)
+                                .addComponent(order_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(48, 48, 48)))
+                        .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(price_credit_card_Label, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(price_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(payment_credit_card)
-                            .addComponent(payment_credit_card_Field, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(btn_card_reader, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
-                .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btn_pay_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btn_paycheck_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(payment_credit_card_Field, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(45, 45, 45)
+                        .addGroup(credit_card_PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_pay_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btn_paycheck_credit_card, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(credit_card_PanelLayout.createSequentialGroup()
+                        .addGap(77, 77, 77)
+                        .addComponent(btn_card_reader, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(58, Short.MAX_VALUE))
         );
 
@@ -456,11 +501,11 @@ public class PaymentJFrame extends javax.swing.JFrame {
             .addGroup(contentPaneLayout.createSequentialGroup()
                 .addGap(172, 172, 172)
                 .addComponent(btn_cash)
-                .addGap(108, 108, 108)
+                .addGap(169, 169, 169)
                 .addComponent(btn_credit_card)
-                .addGap(112, 112, 112)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 168, Short.MAX_VALUE)
                 .addComponent(btn_exit)
-                .addContainerGap(158, Short.MAX_VALUE))
+                .addGap(148, 148, 148))
             .addGroup(contentPaneLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(contentPaneLayout.createSequentialGroup()
                     .addContainerGap()
@@ -498,8 +543,14 @@ public class PaymentJFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_cashActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cashActionPerformed
-        switchPanels(cash_Panel); // cash 버튼을 누르면 cash 패널로 전환 ( 기본적으로 cash 패널이 보여짐 )
+        //switchPanels(cash_Panel); // cash 버튼을 누르면 cash 패널로 전환 ( 기본적으로 cash 패널이 보여짐 )
         JOptionPane.showMessageDialog(null, "현금 결제 입니다.", "현금 결제", JOptionPane.INFORMATION_MESSAGE, null);
+        
+        cash_Panel.setVisible(true);
+        credit_card_Panel.setVisible(false);
+        
+        cash_Panel.setEnabled(true);
+        credit_card_Panel.setEnabled(false);
         
         if(errorcount >= 1) { // 에러 카운트가 증가했을 시 : cash button을 새로 눌러 결제를 재도전
             JOptionPane.showMessageDialog(null, "비정상종료로 인한 상품내용 복구", "에러카운트 감지", JOptionPane.INFORMATION_MESSAGE);
@@ -511,8 +562,14 @@ public class PaymentJFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_cashActionPerformed
 
     private void btn_credit_cardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_credit_cardActionPerformed
-        switchPanels(credit_card_Panel); // credit_card 버튼을 누르면 credit_card 패널로 전환 
+        //switchPanels(credit_card_Panel); // credit_card 버튼을 누르면 credit_card 패널로 전환 
         JOptionPane.showMessageDialog(null, "카드 결제 입니다.", "카드 결제", JOptionPane.INFORMATION_MESSAGE, null);
+        
+        cash_Panel.setVisible(false);
+        credit_card_Panel.setVisible(true);
+        
+        cash_Panel.setEnabled(false);
+        credit_card_Panel.setEnabled(true);
         
         if(errorcount >= 1) { // 에러 카운트가 증가했을 시 : cash button을 새로 눌러 결제를 재도전
             JOptionPane.showMessageDialog(null, "비정상종료로 인한 상품내용 복구", "에러카운트 감지", JOptionPane.INFORMATION_MESSAGE);
@@ -525,21 +582,27 @@ public class PaymentJFrame extends javax.swing.JFrame {
 
     private void btn_pay_credit_cardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pay_credit_cardActionPerformed
         // 카드 결제
-        calNum = paymentNum_card - price;
+        
+        if(card_procedure == false) {
+            JOptionPane.showMessageDialog(null, "결제확인버튼을 눌러 결제 금액을 확정해주세요.", "경고", JOptionPane.ERROR_MESSAGE);
+        } else {
+            calNum = paymentNum_card - price;
 
-        if(calNum >= 0) { // ** 현재 카드는 지불할 값 = 상품 가격 이기때문에 항상 결제 성공함. 변경은 카드 리더기 참고 **
-            JOptionPane.showMessageDialog(null, "결제가 완료 되었습니다", "결제 성공", JOptionPane.INFORMATION_MESSAGE, null);
-            // 결제가 완료되었기 때문에 주문내용 , 가격 , 지불 금액 을 초기화
-            payment_cash_Field.setText("");
-            order_cash_Label.setText("");
-            price_cash_Label.setText("");
-            dispose(); // 결제창 닫음.
-        }
-        // 구매 실패한 경우 실패 했다는 창만 보여진다.
-        else if(calNum < 0) {
-            JOptionPane.showMessageDialog(null, "결제 실패 : 지불 금액이 모자랍니다. 결제 창을 닫습니다." , "결제 실패", JOptionPane.ERROR_MESSAGE, null);
-            dispose();
-        }
+            if(calNum >= 0) { // ** 현재 카드는 지불할 값 = 상품 가격 이기때문에 항상 결제 성공함. 변경은 카드 리더기 참고 **
+                JOptionPane.showMessageDialog(null, "결제가 완료 되었습니다", "결제 성공", JOptionPane.INFORMATION_MESSAGE, null);
+                // 결제가 완료되었기 때문에 주문내용 , 가격 , 지불 금액 을 초기화
+                payment_cash_Field.setText("");
+                order_cash_Label.setText("");
+                price_cash_Label.setText("");
+                card_procedure = false;
+                dispose(); // 결제창 닫음.
+            }
+            // 구매 실패한 경우 실패 했다는 창만 보여진다.
+            else if(calNum < 0) {
+                JOptionPane.showMessageDialog(null, "결제 실패 : 지불 금액이 모자랍니다. 결제 창을 닫습니다." , "결제 실패", JOptionPane.ERROR_MESSAGE, null);
+                dispose();
+            }
+        }  
     }//GEN-LAST:event_btn_pay_credit_cardActionPerformed
 
     private void btn_card_readerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_card_readerActionPerformed
@@ -595,11 +658,11 @@ public class PaymentJFrame extends javax.swing.JFrame {
             count_1000won = 0;
             count_500won = 0;
             count_100won = 0;
+            cash_procedure = true; 
             break;
             
             case JOptionPane.NO_OPTION:
             // 사용자가 "아니오" 를 선택한 경우
-                // 사용자가 "아니오"를 선택한 경우
             paymentNum_cash = 0;
             payment_cash_Field.setText(Integer.toString(paymentNum_cash));
 
@@ -641,20 +704,28 @@ public class PaymentJFrame extends javax.swing.JFrame {
 
     private void btn_pay_cashMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btn_pay_cashMouseClicked
         // 현금 결제 버튼. 결제할 가격-상품가격이 0 이상이면 잔돈과 함께 결제 완료 창이 보여진다. 그 후에 각 TextField 초기화와 값 초기화
-        calNum = paymentNum_cash - price;
+        
+        if(cash_procedure == false) {
+            JOptionPane.showMessageDialog(null, "결제확인버튼을 눌러 결제 금액을 확정해주세요.", "경고", JOptionPane.ERROR_MESSAGE);
+        } else { // cash_procedure 가 true 일 때
+            calNum = paymentNum_cash - price;
 
-        if(calNum >= 0) {
-            JOptionPane.showMessageDialog(null, "결제가 완료 되었습니다.\n 잔돈 :"+ calNum, "결제 성공", JOptionPane.INFORMATION_MESSAGE, null);
-            // 결제가 완료되었기 때문에 주문내용 , 가격 , 지불 금액 을 초기화
-            payment_cash_Field.setText("");
-            order_cash_Label.setText("");
-            price_cash_Label.setText("");
-            dispose(); // 결제창 닫음.
-        }
-        // 구매 실패한 경우 실패 했다는 창만 보여진다.
-        else if(calNum < 0) {
-            JOptionPane.showMessageDialog(null, "결제 실패 : 지불 금액이 모자랍니다." , "결제 실패", JOptionPane.ERROR_MESSAGE, null);
-            // 결제 실패이기 때문에 주문내용 , 가격 , 지불 금액을 초기화를 하지않는다.
+            if(calNum >= 0) {
+                JOptionPane.showMessageDialog(null, "결제가 완료 되었습니다.\n 잔돈 :"+ calNum, "결제 성공", JOptionPane.INFORMATION_MESSAGE, null);
+                // 결제가 완료되었기 때문에 주문내용 , 가격 , 지불 금액 을 초기화
+                payment_cash_Field.setText("");
+                order_cash_Label.setText("");
+                price_cash_Label.setText("");
+                cash_procedure = false;
+                dispose(); // 결제창 닫음.
+                timecheck = false;
+                
+            }
+            // 구매 실패한 경우 실패 했다는 창만 보여진다.
+            else if(calNum < 0) {
+                JOptionPane.showMessageDialog(null, "결제 실패 : 지불 금액이 모자랍니다." , "결제 실패", JOptionPane.ERROR_MESSAGE, null);
+                // 결제 실패이기 때문에 주문내용 , 가격 , 지불 금액을 초기화를 하지않는다.
+            }
         }
     }//GEN-LAST:event_btn_pay_cashMouseClicked
 
@@ -700,7 +771,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
 
     private void btn_paycheck_credit_cardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_paycheck_credit_cardActionPerformed
         // 카드 : 지불할 가격에 대해 지불금액을 최종 확인하는 버튼이다.
-        
+       
         //Memento
         info = new Information(order , price); // 객체 생성
         caretaker = new CareTaker(); // 객체 생성
@@ -710,8 +781,8 @@ public class PaymentJFrame extends javax.swing.JFrame {
         int result = JOptionPane.showConfirmDialog(this,"지불금액을 확정하겠습니까?\n 지불금액:"+paymentNum_card, "최종확인", JOptionPane.YES_NO_OPTION);
         
         switch (result) {
-            // 사용자가 "예","아니오"의 선택 없이 다이얼로그 창을 닫은 경우
             case JOptionPane.CANCEL_OPTION:
+            // 사용자가 "예","아니오"의 선택 없이 다이얼로그 창을 닫은 경우
             break;
             case JOptionPane.YES_NO_OPTION:
             // 사용자가 "예"를 선택한 경우
@@ -732,6 +803,7 @@ public class PaymentJFrame extends javax.swing.JFrame {
             } catch (Exception e) {
                 e.getStackTrace();
             }
+            card_procedure = true; 
             break;
             
             case JOptionPane.NO_OPTION:
